@@ -1,0 +1,10 @@
+<div class="progresso">
+  <!-- O role e os aria-value* ficam no trilho; o leitor de tela lê o valor por eles. -->
+  <div class="progresso__trilho" role="progressbar" aria-label="{{ rotulo }}"
+       aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ percentual }}">
+    <!-- ng-style: a largura do preenchimento é o próprio percentual. -->
+    <div class="progresso__barra" ng-style="{ width: percentual + '%' }"></div>
+  </div>
+  <!-- aria-hidden: o número visível repetiria o aria-valuenow no leitor de tela. -->
+  <span class="progresso__percentual" aria-hidden="true" ng-if="mostrarPercentual">{{ percentual }}%</span>
+</div>

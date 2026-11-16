@@ -1,0 +1,13 @@
+<div class="abas">
+  <div class="abas__lista" role="tablist" aria-label="{{ rotulo }}">
+    <!-- Só a aba ativa entra na ordem de Tab (tabindex 0); as setas levam às outras. -->
+    <button type="button" role="tab" class="abas__aba"
+            ng-repeat="aba in abas track by aba.$id"
+            id="{{ aba.idAba }}" aria-controls="{{ aba.idPainel }}"
+            aria-selected="{{ $index === indiceAtivo }}"
+            tabindex="{{ $index === indiceAtivo ? 0 : -1 }}"
+            ng-click="selecionar($index)" ng-keydown="aoTeclar($event, $index)">{{ aba.titulo }}</button>
+  </div>
+  <!-- ng-transclude: aqui entram as tags <aba> escritas dentro de <abas>. -->
+  <div class="abas__paineis" ng-transclude></div>
+</div>

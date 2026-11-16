@@ -1,0 +1,4 @@
+<!-- ng-show (e não ng-if): o painel inativo só fica oculto. Com ng-if, o
+     formulário e o campo de arquivo seriam recriados a cada troca de aba. -->
+<div class="abas__painel" role="tabpanel" id="{{ idPainel }}" aria-labelledby="{{ idAba }}" tabindex="0"
+     ng-show="estaAtiva()" ng-transclude></div>
