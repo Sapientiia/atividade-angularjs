@@ -50,9 +50,79 @@
       </div>
     </section>
 
-    <section id="disciplinas" class="secao" aria-labelledby="titulo-disciplinas">
+    <section id="disciplinas" class="secao" aria-labelledby="titulo-disciplinas"
+             ng-controller="CatalogoController as catalogo">
       <div class="container">
         <h2 id="titulo-disciplinas" tabindex="-1">Disciplinas ofertadas — 2027.1</h2>
+
+        <div class="filtros">
+          <div class="filtros__busca">
+            <label class="rotulo" for="busca-disciplina">Buscar disciplina</label>
+            <!-- ng-model: two-way binding com catalogo.termo.
+                 ng-change: a cada tecla, refaz a lista e volta à página 1. -->
+            <input type="search" id="busca-disciplina" class="campo" placeholder="Código ou nome"
+                   ng-model="catalogo.termo" ng-change="catalogo.aoBuscar()">
+          </div>
+          <!-- Segunda instância do menu suspenso: callback geral (on-selecionar)
+               e opção vigente marcada (selecionada). -->
+          <menu-suspenso rotulo="Semestre: {{ catalogo.semestre.rotulo }}"
+                         opcoes="catalogo.opcoesSemestre"
+                         selecionada="catalogo.semestre"
+                         on-selecionar="catalogo.filtrarPorSemestre(opcao)"></menu-suspenso>
+        </div>
+
+        <p class="catalogo__resumo" ng-show="catalogo.resumo.quantidade > 0">
+          Solicitações:
+          <strong>{{ catalogo.resumo.quantidade }} {{ catalogo.resumo.quantidade === 1 ? 'disciplina' : 'disciplinas' }}</strong>
+          · {{ catalogo.resumo.creditos }} créditos · {{ catalogo.resumo.valorMensal | moeda }} por mês
+        </p>
+
+        <!-- Uma única tabela: a partir de 992 px aparece como tabela; abaixo
+             disso, o CSS transforma cada linha num bloco "rótulo valor" com o
+             texto de data-rotulo. -->
+        <table class="tabela tabela--catalogo" aria-labelledby="titulo-disciplinas"
+               ng-show="catalogo.filtradas.length > 0">
+          <thead>
+            <tr>
+              <th scope="col">Código</th>
+              <th scope="col">Disciplina</th>
+              <th scope="col">Semestre</th>
+              <th scope="col" class="tabela__numero">Carga horária</th>
+              <th scope="col">Turno</th>
+              <th scope="col" class="tabela__numero">Vagas</th>
+              <th scope="col" class="tabela__numero">Valor mensal</th>
+              <th scope="col"><span class="visualmente-oculto">Ação</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- limitTo: fatia da página atual (5 itens a partir de inicioDaPagina()). -->
+            <tr ng-repeat="disciplina in catalogo.filtradas | limitTo: catalogo.porPagina : catalogo.inicioDaPagina() track by disciplina.codigo">
+              <td class="tabela__codigo">{{ disciplina.codigo | uppercase }}</td>
+              <td class="tabela__nome">{{ disciplina.nome }}</td>
+              <td data-rotulo="Semestre">{{ disciplina.semestre }}</td>
+              <td class="tabela__numero" data-rotulo="Carga horária">{{ disciplina.cargaHoraria | cargaHoraria }}</td>
+              <td data-rotulo="Turno">{{ disciplina.turno }}</td>
+              <td class="tabela__numero" data-rotulo="Vagas">{{ disciplina.vagas }}</td>
+              <td class="tabela__numero" data-rotulo="Valor mensal">{{ disciplina.valorMensal | moeda }}</td>
+              <td class="tabela__acao">
+                <!-- O aria-label diferencia os 16 botões iguais para o leitor de tela;
+                     "Solicitada" e "Sem vagas" ficam só com o texto visível. -->
+                <button type="button" class="btn btn--secundario"
+                        ng-disabled="disciplina.solicitada || disciplina.vagas === 0"
+                        ng-attr-aria-label="{{ disciplina.solicitada || disciplina.vagas === 0 ? undefined : 'Solicitar matrícula em ' + (disciplina.codigo | uppercase) + ' – ' + disciplina.nome }}"
+                        ng-click="catalogo.solicitar(disciplina)">{{ catalogo.rotuloDoBotao(disciplina) }}</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p class="catalogo__vazio" ng-show="catalogo.filtradas.length === 0">Nenhuma disciplina encontrada.</p>
+
+        <!-- O ng-show deste elemento usa o escopo da seção; só o template da
+             diretiva enxerga o escopo isolado. -->
+        <paginacao total-paginas="catalogo.totalPaginas" pagina-atual="catalogo.pagina"
+                   on-mudar-pagina="catalogo.irPara(pagina)" rotulo="Paginação do catálogo"
+                   ng-show="catalogo.totalPaginas > 0"></paginacao>
       </div>
     </section>
 
@@ -62,9 +132,12 @@
       </div>
     </section>
 
-    <section id="ajuda" class="secao" aria-labelledby="titulo-ajuda">
+    <section id="ajuda" class="secao" aria-labelledby="titulo-ajuda"
+             ng-controller="AjudaController as ajuda">
       <div class="container">
         <h2 id="titulo-ajuda" tabindex="-1">Ajuda da secretaria</h2>
+        <acordeao itens="ajuda.perguntas"></acordeao>
+        <p class="ajuda__horario">Secretaria acadêmica: segunda a sexta, das 8h às 20h, Bloco A, térreo.</p>
       </div>
     </section>
   </main>
@@ -101,10 +174,14 @@
   <script src="app/servicos/toast.service.js"></script>
 
   <!-- 4. Componentes (diretivas) -->
+  <script src="app/componentes/acordeao/acordeao.directive.js"></script>
+  <script src="app/componentes/paginacao/paginacao.directive.js"></script>
   <script src="app/componentes/menu-suspenso/menu-suspenso.directive.js"></script>
   <script src="app/componentes/toast/toast-container.directive.js"></script>
 
   <!-- 5. Controladores -->
   <script src="app/controladores/conta.controller.js"></script>
+  <script src="app/controladores/catalogo.controller.js"></script>
+  <script src="app/controladores/ajuda.controller.js"></script>
 </body>
 </html>

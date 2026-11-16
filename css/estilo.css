@@ -243,12 +243,13 @@ a:focus-visible {
 
 /* Única regra ligada às tags das diretivas: o navegador trata tags
    desconhecidas como inline, e estas precisam ocupar a linha inteira.
-   menu-suspenso fica inline: o display vem do contexto onde ele é usado. */
+   No menu-suspenso, quem decide a largura é o div.menu-suspenso de dentro. */
 acordeao,
 paginacao,
 barra-progresso,
 abas,
 aba,
+menu-suspenso,
 toast-container {
   display: block;
 }
@@ -370,14 +371,20 @@ toast-container {
   border-color: var(--cor-secundaria-borda-ativa);
 }
 
-.btn--contorno {
+/* Botão de contorno. O botão do filtro de semestre recebe as mesmas regras
+   pelo contexto (.filtros), como o menu da conta faz com o .btn--texto. */
+.btn--contorno,
+.filtros .menu-suspenso__botao {
   color: var(--cor-contorno-secundario);
   background: var(--branco);
   border-color: var(--cor-contorno-secundario);
 }
 
 .btn--contorno:hover:not(:disabled),
-.btn--contorno:active:not(:disabled) {
+.btn--contorno:active:not(:disabled),
+.filtros .menu-suspenso__botao:hover,
+.filtros .menu-suspenso__botao:active,
+.filtros .menu-suspenso__botao[aria-expanded="true"] {
   color: var(--branco);
   background: var(--cor-contorno-secundario);
 }
@@ -709,6 +716,425 @@ toast-container {
 .toast__fechar:focus-visible,
 .toast__fechar:active {
   opacity: 1;
+}
+
+/* ==========================================================================
+   Campos de formulário
+   ========================================================================== */
+
+.rotulo {
+  display: block;
+  margin-bottom: var(--espaco-1);
+  font-weight: var(--peso-normal);
+  color: var(--cor-texto);
+}
+
+.campo {
+  display: block;
+  width: 100%;
+  padding: var(--campo-padding);
+  font: inherit;
+  font-size: var(--fonte-base);
+  line-height: var(--altura-linha);
+  color: var(--cor-texto-secundario);
+  background: var(--branco);
+  border: 1px solid var(--cor-borda-campo);
+  border-radius: var(--raio);
+  transition: border-color var(--transicao-controle), box-shadow var(--transicao-controle);
+}
+
+/* O navegador aplica um visual próprio ao type="search" (reboot do Bootstrap 4). */
+.campo[type="search"] {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.campo:focus {
+  outline: 0;
+  box-shadow: var(--anel-foco);
+}
+
+/* Abaixo de 16 px, o Safari do iOS dá zoom na página ao focar o campo. */
+@media (max-width: 767.98px) {
+  .campo {
+    font-size: 1rem;
+  }
+}
+
+/* ==========================================================================
+   Disciplinas: barra de filtros, resumo e mensagem vazia
+   ========================================================================== */
+
+/* Abaixo de 768 px: busca e filtro empilhados, em largura total. */
+.filtros {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-3);
+  margin-bottom: var(--espaco-4);
+}
+
+.filtros .menu-suspenso {
+  display: block;
+}
+
+.filtros .menu-suspenso__botao {
+  justify-content: space-between;
+  width: 100%;
+}
+
+.filtros .menu-suspenso__lista {
+  min-width: 100%;
+}
+
+/* A partir de 768 px: lado a lado, alinhados pela base do campo. */
+@media (min-width: 768px) {
+  .filtros {
+    flex-direction: row;
+    align-items: flex-end;
+  }
+
+  .filtros__busca {
+    flex: 1;
+    max-width: 24rem;
+  }
+
+  .filtros .menu-suspenso {
+    display: inline-block;
+  }
+
+  .filtros .menu-suspenso__botao {
+    width: auto;
+  }
+
+  .filtros .menu-suspenso__lista {
+    min-width: 10rem;
+  }
+}
+
+.catalogo__resumo {
+  margin-bottom: var(--espaco-3);
+  color: var(--cor-texto);
+}
+
+.catalogo__vazio {
+  margin: 0;
+  padding-block: var(--espaco-4);
+  color: var(--cor-texto-suave);
+}
+
+/* ==========================================================================
+   Tabelas (.table do Bootstrap 4)
+   ========================================================================== */
+
+.tabela {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tabela th,
+.tabela td {
+  padding: var(--tabela-padding);
+  text-align: left;
+  vertical-align: top;
+  border-top: var(--borda);
+}
+
+.tabela thead th {
+  font-weight: var(--peso-negrito);
+  vertical-align: bottom;
+  border-bottom: 2px solid var(--cor-borda);
+}
+
+/* Colunas numéricas: à direita e com algarismos de largura igual. */
+.tabela .tabela__numero {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.tabela .btn {
+  white-space: nowrap;
+}
+
+@media (max-width: 767.98px) {
+  .tabela th,
+  .tabela td {
+    padding: .5rem;
+  }
+}
+
+/* Catálogo abaixo de 992 px: cada linha vira um bloco "rótulo valor".
+   O modificador --catalogo impede que estas regras atinjam outras tabelas. */
+@media (max-width: 991.98px) {
+  .tabela--catalogo {
+    display: block;
+  }
+
+  /* Cabeçalho escondido só da tela (como .visualmente-oculto), não do leitor. */
+  .tabela--catalogo thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .tabela--catalogo tbody {
+    display: grid;
+    gap: var(--espaco-3);
+  }
+
+  .tabela--catalogo tr {
+    display: block;
+    min-width: 0;
+    padding: .75rem var(--espaco-3);
+    border: var(--borda-cartao);
+    border-radius: var(--raio);
+  }
+
+  .tabela--catalogo td {
+    display: grid;
+    grid-template-columns: 8rem 1fr;
+    gap: var(--espaco-2);
+    padding: var(--espaco-1) 0;
+    border: 0;
+  }
+
+  /* O rótulo vem do atributo data-rotulo de cada célula. */
+  .tabela--catalogo td::before {
+    content: attr(data-rotulo);
+    color: var(--cor-texto-suave);
+  }
+
+  .tabela--catalogo .tabela__numero {
+    text-align: left;
+  }
+
+  .tabela--catalogo .tabela__codigo,
+  .tabela--catalogo .tabela__nome,
+  .tabela--catalogo .tabela__acao {
+    display: block;
+  }
+
+  .tabela--catalogo .tabela__codigo {
+    padding: 0;
+    font-size: var(--fonte-pequena);
+    color: var(--cor-texto-suave);
+  }
+
+  .tabela--catalogo .tabela__nome {
+    padding-top: 0;
+    font-weight: var(--peso-negrito);
+  }
+
+  .tabela--catalogo .tabela__acao .btn {
+    justify-content: center;
+    width: 100%;
+    margin-top: var(--espaco-2);
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+  .tabela--catalogo tbody {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Na tabela do catálogo toda linha tem um botão, mais alto que uma linha de
+   texto; centralizar na vertical deixa o texto na altura do rótulo do botão. */
+@media (min-width: 992px) {
+  .tabela--catalogo tbody td {
+    vertical-align: middle;
+  }
+}
+
+/* ==========================================================================
+   Componente: paginação (.pagination / .page-link)
+   ========================================================================== */
+
+.paginacao__lista {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: var(--espaco-4) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.paginacao__botao {
+  position: relative;
+  display: block;
+  margin-left: -1px;
+  padding: var(--pagina-padding);
+  font: inherit;
+  font-size: var(--fonte-base);
+  line-height: var(--altura-linha-paginacao);
+  color: var(--cor-primaria);
+  background: var(--branco);
+  border: var(--borda);
+  cursor: pointer;
+  transition:
+    color var(--transicao-controle),
+    background-color var(--transicao-controle),
+    border-color var(--transicao-controle),
+    box-shadow var(--transicao-controle);
+}
+
+/* Raio só nas pontas externas do grupo. */
+.paginacao__item:first-child .paginacao__botao {
+  margin-left: 0;
+  border-top-left-radius: var(--raio);
+  border-bottom-left-radius: var(--raio);
+}
+
+.paginacao__item:last-child .paginacao__botao {
+  border-top-right-radius: var(--raio);
+  border-bottom-right-radius: var(--raio);
+}
+
+.paginacao__botao:hover:not(:disabled),
+.paginacao__botao:active:not(:disabled) {
+  z-index: 2;
+  color: var(--cor-link-hover);
+  background: var(--cor-pagina-hover);
+}
+
+/* z-index 3: o anel de foco fica por cima dos botões vizinhos. */
+.paginacao__botao:focus-visible {
+  z-index: 3;
+  outline: 0;
+  box-shadow: var(--anel-foco);
+}
+
+.paginacao__botao--atual,
+.paginacao__botao--atual:hover:not(:disabled),
+.paginacao__botao--atual:active:not(:disabled) {
+  z-index: 3;
+  color: var(--branco);
+  background: var(--cor-primaria);
+  border-color: var(--cor-primaria);
+}
+
+.paginacao__botao:disabled {
+  color: var(--cor-texto-suave);
+  background: var(--branco);
+  cursor: default;
+}
+
+/* ==========================================================================
+   Componente: acordeão
+   ========================================================================== */
+
+.acordeao {
+  background: var(--branco);
+  border: var(--borda-cartao);
+  border-radius: var(--raio);
+}
+
+.acordeao__item + .acordeao__item {
+  border-top: var(--borda);
+}
+
+.acordeao__titulo {
+  margin: 0;
+  font-size: inherit;
+}
+
+.acordeao__botao {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--espaco-2);
+  width: 100%;
+  padding: .75rem var(--cartao-padding);
+  font: inherit;
+  font-weight: var(--peso-negrito);
+  line-height: var(--altura-linha);
+  color: var(--cor-texto);
+  text-align: left;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  transition: background-color var(--transicao-controle), box-shadow var(--transicao-controle);
+}
+
+/* O primeiro e o último botão acompanham o raio do contêiner (descontada a
+   borda de 1 px), para o fundo do hover não passar das pontas. */
+.acordeao__item:first-child .acordeao__botao {
+  border-top-left-radius: calc(var(--raio) - 1px);
+  border-top-right-radius: calc(var(--raio) - 1px);
+}
+
+.acordeao__item:last-child .acordeao__botao {
+  border-bottom-left-radius: calc(var(--raio) - 1px);
+  border-bottom-right-radius: calc(var(--raio) - 1px);
+}
+
+.acordeao__botao:hover {
+  background: var(--cor-fundo-secundario);
+}
+
+.acordeao__botao:active {
+  background: var(--cinza-200);
+}
+
+/* Anel interno: o externo seria coberto pelos itens vizinhos. */
+.acordeao__botao:focus-visible {
+  outline: 0;
+  box-shadow: var(--anel-foco-interno);
+}
+
+/* Fechado, o chevron aponta para a direita; aberto, para baixo. */
+.icone--chevron {
+  margin-top: .2rem;
+  transform: rotate(-90deg);
+  transition: transform var(--transicao-colapso);
+}
+
+.acordeao__botao[aria-expanded="true"] .icone--chevron {
+  transform: rotate(0);
+}
+
+/* Transição de altura sem JavaScript: a linha do grid vai de 0fr a 1fr.
+   Fechado, o visibility: hidden também tira o conteúdo da ordem de Tab
+   e do leitor de tela. */
+.acordeao__painel {
+  display: grid;
+  grid-template-rows: 0fr;
+  visibility: hidden;
+  transition:
+    grid-template-rows var(--transicao-colapso),
+    visibility var(--transicao-colapso);
+}
+
+.acordeao__painel--aberto {
+  grid-template-rows: 1fr;
+  visibility: visible;
+}
+
+.acordeao__conteudo {
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* O recuo fica no parágrafo: com padding no .acordeao__conteudo, a linha
+   de 0fr não chegaria a altura zero. */
+.acordeao__conteudo p {
+  margin: 0;
+  padding: 0 var(--cartao-padding) var(--espaco-3) calc(var(--cartao-padding) + 16px + var(--espaco-2));
+}
+
+@media (min-width: 768px) {
+  .acordeao {
+    max-width: var(--largura-texto);
+  }
+}
+
+.ajuda__horario {
+  margin: var(--espaco-3) 0 0;
+  color: var(--cor-texto-suave);
 }
 
 /* ==========================================================================
