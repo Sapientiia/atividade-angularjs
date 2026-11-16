@@ -390,3 +390,205 @@ describe('paginacao', () => {
     expect(botao('Próxima página').disabled).toBe(true);
   });
 });
+
+describe('barraProgresso', () => {
+  let $rootScope;
+  let escopo;
+  let $compile;
+
+  beforeEach(() => {
+    const $injector = criarInjetor();
+    $rootScope = $injector.get('$rootScope');
+    $compile = $injector.get('$compile');
+    escopo = $rootScope.$new();
+  });
+
+  afterEach(() => {
+    $rootScope.$destroy();
+  });
+
+  function montar(html) {
+    const elemento = $compile(html)(escopo);
+    escopo.$digest();
+    return {
+      trilho: elemento[0].querySelector('.progresso__trilho'),
+      barra: elemento[0].querySelector('.progresso__barra'),
+      percentual: () => elemento[0].querySelector('.progresso__percentual')
+    };
+  }
+
+  it('61 dá width: 61% e aria-valuenow="61" no trilho', () => {
+    escopo.valor = 61;
+    const { trilho, barra, percentual } = montar('<barra-progresso valor="valor" rotulo="Progresso do curso" mostrar-percentual="true"></barra-progresso>');
+
+    expect(barra.style.width).toBe('61%');
+    expect(trilho.getAttribute('role')).toBe('progressbar');
+    expect(trilho.getAttribute('aria-valuenow')).toBe('61');
+    expect(trilho.getAttribute('aria-valuemin')).toBe('0');
+    expect(trilho.getAttribute('aria-valuemax')).toBe('100');
+    expect(trilho.getAttribute('aria-label')).toBe('Progresso do curso');
+    expect(percentual().textContent).toBe('61%');
+    expect(percentual().getAttribute('aria-hidden')).toBe('true');
+  });
+
+  it('limita a 0–100, arredonda e acompanha o valor quando ele muda', () => {
+    escopo.valor = 150;
+    const { trilho, barra } = montar('<barra-progresso valor="valor" rotulo="Envio"></barra-progresso>');
+    expect(trilho.getAttribute('aria-valuenow')).toBe('100');
+
+    escopo.valor = -5;
+    escopo.$digest();
+    expect(barra.style.width).toBe('0%');
+
+    escopo.valor = '33.6';
+    escopo.$digest();
+    expect(trilho.getAttribute('aria-valuenow')).toBe('34');
+  });
+
+  it('o percentual só aparece com mostrar-percentual', () => {
+    escopo.valor = 40;
+    const { percentual } = montar('<barra-progresso valor="valor" rotulo="Envio"></barra-progresso>');
+    expect(percentual()).toBeNull();
+  });
+});
+
+describe('abas e aba', () => {
+  let $rootScope;
+  let escopo;
+  let elemento;
+
+  beforeEach(() => {
+    const $injector = criarInjetor();
+    $rootScope = $injector.get('$rootScope');
+    escopo = $rootScope.$new();
+    escopo.dados = { email: 'a@b.com' };
+    elemento = $injector.get('$compile')(
+      '<abas rotulo="Perfil do aluno">' +
+      '  <aba titulo="Dados pessoais"><input class="campo-teste" ng-model="dados.email"></aba>' +
+      '  <aba titulo="Histórico">Conteúdo 2</aba>' +
+      '  <aba titulo="Documentos">Conteúdo 3</aba>' +
+      '</abas>'
+    )(escopo);
+    document.body.appendChild(elemento[0]);
+    escopo.$digest();
+  });
+
+  afterEach(() => {
+    $rootScope.$destroy();
+    elemento.remove();
+  });
+
+  function abas() {
+    return elemento[0].querySelectorAll('[role="tab"]');
+  }
+
+  function paineis() {
+    return elemento[0].querySelectorAll('[role="tabpanel"]');
+  }
+
+  it('a 1ª aba começa ativa, com os IDs ligando aba e painel', () => {
+    expect(elemento[0].querySelector('[role="tablist"]').getAttribute('aria-label')).toBe('Perfil do aluno');
+    expect([...abas()].map((aba) => aba.textContent)).toEqual(['Dados pessoais', 'Histórico', 'Documentos']);
+    expect([...abas()].map((aba) => aba.getAttribute('aria-selected'))).toEqual(['true', 'false', 'false']);
+    expect([...abas()].map((aba) => aba.getAttribute('tabindex'))).toEqual(['0', '-1', '-1']);
+    abas().forEach((aba, i) => {
+      expect(aba.getAttribute('aria-controls')).toBe(paineis()[i].id);
+      expect(paineis()[i].getAttribute('aria-labelledby')).toBe(aba.id);
+    });
+    expect(paineis()[0].classList.contains('ng-hide')).toBe(false);
+    expect(paineis()[1].classList.contains('ng-hide')).toBe(true);
+  });
+
+  it('um clique na 2ª troca aria-selected e remove ng-hide do painel', () => {
+    abas()[1].click();
+    expect(abas()[0].getAttribute('aria-selected')).toBe('false');
+    expect(abas()[1].getAttribute('aria-selected')).toBe('true');
+    expect(paineis()[1].classList.contains('ng-hide')).toBe(false);
+    expect(paineis()[0].classList.contains('ng-hide')).toBe(true);
+    // ng-show, e não ng-if: o painel inativo continua no DOM.
+    expect(paineis()).toHaveLength(3);
+  });
+
+  it('seta para a esquerda na 1ª vai para a última e move o foco; Home e End também', () => {
+    abas()[0].focus();
+    tecla(abas()[0], 'ArrowLeft');
+    expect(abas()[2].getAttribute('aria-selected')).toBe('true');
+    expect(document.activeElement).toBe(abas()[2]);
+
+    tecla(abas()[2], 'ArrowRight');
+    expect(abas()[0].getAttribute('aria-selected')).toBe('true');
+    expect(document.activeElement).toBe(abas()[0]);
+
+    tecla(abas()[0], 'End');
+    expect(document.activeElement).toBe(abas()[2]);
+    tecla(abas()[2], 'Home');
+    expect(document.activeElement).toBe(abas()[0]);
+  });
+
+  it('ng-model dentro da aba altera o escopo do pai (transclusão)', () => {
+    const campo = elemento[0].querySelector('.campo-teste');
+    expect(campo.value).toBe('a@b.com');
+    campo.value = 'novo@b.com';
+    campo.dispatchEvent(new Event('input'));
+    expect(escopo.dados.email).toBe('novo@b.com');
+  });
+});
+
+describe('seletorArquivo', () => {
+  let $rootScope;
+  let escopo;
+  let campo;
+  let valor;
+
+  beforeEach(() => {
+    const $injector = criarInjetor();
+    $rootScope = $injector.get('$rootScope');
+    escopo = $rootScope.$new();
+    escopo.arquivo = null;
+    escopo.escolher = vi.fn((arquivo) => {
+      escopo.arquivo = arquivo;
+    });
+    const elemento = $injector.get('$compile')(
+      '<input type="file" seletor-arquivo arquivo="arquivo" on-selecionar="escolher(arquivo)">'
+    )(escopo);
+    campo = elemento[0];
+    // O jsdom não deixa escrever um caminho no value de um campo de arquivo;
+    // um getter/setter simulado permite conferir a limpeza.
+    valor = '';
+    Object.defineProperty(campo, 'value', { get: () => valor, set: (v) => { valor = v; } });
+    escopo.$digest();
+  });
+
+  afterEach(() => {
+    $rootScope.$destroy();
+  });
+
+  function escolherArquivo(arquivo) {
+    Object.defineProperty(campo, 'files', { value: [arquivo], configurable: true });
+    valor = 'C:\\fakepath\\' + arquivo.name;
+    campo.dispatchEvent(new Event('change'));
+  }
+
+  it('o change entrega o File ao callback', () => {
+    const arquivo = new File(['x'], 'atestado.png', { type: 'image/png' });
+    escolherArquivo(arquivo);
+    expect(escopo.escolher).toHaveBeenCalledWith(arquivo);
+    expect(escopo.arquivo).toBe(arquivo);
+  });
+
+  it('com o binding em null, o value do campo fica vazio', () => {
+    escolherArquivo(new File(['x'], 'atestado.png'));
+    escopo.$digest();
+    expect(valor).toBe('C:\\fakepath\\atestado.png');
+
+    escopo.arquivo = null;
+    escopo.$digest();
+    expect(valor).toBe('');
+  });
+
+  it('no $destroy remove o listener de change', () => {
+    escopo.$destroy();
+    escolherArquivo(new File(['x'], 'atestado.png'));
+    expect(escopo.escolher).not.toHaveBeenCalled();
+  });
+});
