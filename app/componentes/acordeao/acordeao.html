@@ -1,0 +1,23 @@
+<div class="acordeao">
+  <div class="acordeao__item" ng-repeat="item in itens track by $index">
+    <h3 class="acordeao__titulo">
+      <!-- aria-expanded recebe sempre "true" ou "false", o retorno de estaAberto(). -->
+      <button type="button" class="acordeao__botao" id="{{ idBase }}-botao-{{ $index }}"
+              aria-expanded="{{ estaAberto($index) }}" aria-controls="{{ idBase }}-painel-{{ $index }}"
+              ng-click="alternar($index)">
+        <svg class="icone icone--chevron" viewBox="0 0 16 16" aria-hidden="true" focusable="false"
+             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="butt" stroke-linejoin="miter">
+          <path d="M3.5 6 8 10.5 12.5 6"/>
+        </svg>
+        <span>{{ item.titulo }}</span>
+      </button>
+    </h3>
+    <!-- Sem ng-show/ng-if: o painel fica sempre no DOM e a classe "--aberto"
+         dispara a transição de altura feita no CSS (grid-template-rows). -->
+    <div class="acordeao__painel" id="{{ idBase }}-painel-{{ $index }}" role="region"
+         aria-labelledby="{{ idBase }}-botao-{{ $index }}"
+         ng-class="{ 'acordeao__painel--aberto': estaAberto($index) }">
+      <div class="acordeao__conteudo"><p>{{ item.conteudo }}</p></div>
+    </div>
+  </div>
+</div>
