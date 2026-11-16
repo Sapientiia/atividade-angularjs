@@ -1,0 +1,28 @@
+<div class="menu-suspenso">
+  <!-- Padrão "menu button": o botão anuncia que abre um menu e se ele está aberto. -->
+  <button type="button" class="btn menu-suspenso__botao" id="{{ idBase }}-botao"
+          aria-haspopup="true" aria-expanded="{{ aberto }}" aria-controls="{{ idBase }}-lista"
+          ng-click="alternar()" ng-keydown="aoTeclarNoBotao($event)">
+    <span>{{ rotulo }}</span>
+    <svg class="icone icone--chevron-pequeno" viewBox="0 0 16 16" aria-hidden="true" focusable="false"
+         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="butt" stroke-linejoin="miter">
+      <path d="M3.5 6 8 10.5 12.5 6"/>
+    </svg>
+  </button>
+  <!-- A visibilidade vem do estado "aberto", guardado no $scope da diretiva. -->
+  <ul class="menu-suspenso__lista" id="{{ idBase }}-lista" role="menu" aria-labelledby="{{ idBase }}-botao"
+      ng-show="aberto">
+    <li role="none" ng-repeat="opcao in opcoes">
+      <button type="button" role="menuitem" tabindex="-1" class="menu-suspenso__item"
+              ng-attr-aria-current="{{ opcao === selecionada ? 'true' : undefined }}"
+              ng-click="selecionar(opcao)" ng-keydown="aoTeclarNoItem($event, $index)">
+        <svg class="icone icone--check menu-suspenso__check" viewBox="0 0 16 16" aria-hidden="true" focusable="false"
+             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="butt" stroke-linejoin="miter"
+             ng-if="opcao === selecionada">
+          <path d="M3 8.5 6.5 12 13 4.5"/>
+        </svg>
+        {{ opcao.rotulo }}
+      </button>
+    </li>
+  </ul>
+</div>

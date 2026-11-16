@@ -1,0 +1,32 @@
+<!-- A região aria-live existe desde o carregamento, vazia, para o leitor de tela anunciar cada toast que entrar. -->
+<div class="toasts" role="status" aria-live="polite">
+  <div class="toast toast--{{ toast.tipo }}"
+       ng-repeat="toast in toasts track by toast.id"
+       ng-class="{ 'toast--saindo': toast.saindo }">
+    <!-- ng-switch escolhe o ícone do tipo; o texto já diz o tipo, o ícone só reforça. -->
+    <svg class="icone toast__icone" viewBox="0 0 16 16" aria-hidden="true" focusable="false"
+         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="butt" stroke-linejoin="miter"
+         ng-switch="toast.tipo">
+      <g ng-switch-when="sucesso">
+        <circle cx="8" cy="8" r="8" fill="currentColor" stroke="none"/>
+        <path class="icone__glifo" d="M4.5 8.25 7 10.75l4.5-5" stroke-width="1.75"/>
+      </g>
+      <g ng-switch-when="erro">
+        <circle cx="8" cy="8" r="8" fill="currentColor" stroke="none"/>
+        <path class="icone__glifo" d="M5.5 5.5l5 5M10.5 5.5l-5 5" stroke-width="1.75"/>
+      </g>
+      <g ng-switch-when="info">
+        <circle cx="8" cy="8" r="8" fill="currentColor" stroke="none"/>
+        <path class="icone__glifo" d="M8 7v4.5" stroke-width="1.75"/>
+        <circle class="icone__ponto" cx="8" cy="4.6" r="1" stroke="none"/>
+      </g>
+    </svg>
+    <p class="toast__mensagem">{{ toast.mensagem }}</p>
+    <button type="button" class="toast__fechar" aria-label="Fechar notificação" ng-click="fechar(toast.id)">
+      <svg class="icone" viewBox="0 0 16 16" aria-hidden="true" focusable="false"
+           fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="butt" stroke-linejoin="miter">
+        <path d="M4 4l8 8M12 4l-8 8"/>
+      </svg>
+    </button>
+  </div>
+</div>
