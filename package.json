@@ -1,0 +1,16 @@
+{
+  "name": "atividade-angularjs",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "npx --yes serve@14.2.8 -l 3000 .",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "angular": "1.8.3",
+    "angular-mocks": "1.8.3",
+    "jsdom": "^31.0.1",
+    "vitest": "^5.1.0"
+  },
+  "engines": { "node": "^22.22.2 || ^24.15.0 || >=26.0.0" }
+}

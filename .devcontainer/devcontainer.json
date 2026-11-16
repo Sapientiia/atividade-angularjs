@@ -1,0 +1,17 @@
+{
+  "name": "Atividade AngularJS e Vue.js",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:22",
+  "customizations": {
+    "vscode": {
+      "extensions": ["MS-CEINTL.vscode-language-pack-pt-BR"],
+      "settings": { "editor.tabSize": 2, "editor.insertSpaces": true }
+    }
+  },
+  "forwardPorts": [3000, 5173],
+  "portsAttributes": {
+    "3000": { "label": "Portal AngularJS", "onAutoForward": "openBrowser" },
+    "5173": { "label": "Portal Vue (Vite)", "onAutoForward": "openBrowser" }
+  },
+  "postCreateCommand": "npm install && npm --prefix vue install",
+  "postAttachCommand": "npx --yes serve@14.2.8 -l 3000 ."
+}
