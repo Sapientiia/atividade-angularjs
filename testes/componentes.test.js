@@ -236,3 +236,157 @@ describe('toastContainer', () => {
     expect(mensagens).toEqual(['primeira', 'segunda']);
   });
 });
+
+describe('acordeao', () => {
+  let $rootScope;
+  let elemento;
+
+  beforeEach(() => {
+    const $injector = criarInjetor();
+    $rootScope = $injector.get('$rootScope');
+    const escopo = $rootScope.$new();
+    escopo.itens = [
+      { titulo: 'Primeira', conteudo: 'Texto 1' },
+      { titulo: 'Segunda', conteudo: 'Texto 2' },
+      { titulo: 'Terceira', conteudo: 'Texto 3' }
+    ];
+    elemento = $injector.get('$compile')('<acordeao itens="itens"></acordeao>')(escopo);
+    escopo.$digest();
+  });
+
+  afterEach(() => {
+    $rootScope.$destroy();
+  });
+
+  function botoes() {
+    return elemento[0].querySelectorAll('.acordeao__botao');
+  }
+
+  function paineis() {
+    return elemento[0].querySelectorAll('.acordeao__painel');
+  }
+
+  it('começa com todos fechados e liga cada botão ao seu painel', () => {
+    expect(botoes()).toHaveLength(3);
+    botoes().forEach((botao, i) => {
+      expect(botao.getAttribute('aria-expanded')).toBe('false');
+      expect(botao.getAttribute('aria-controls')).toBe(paineis()[i].id);
+      expect(paineis()[i].getAttribute('role')).toBe('region');
+      expect(paineis()[i].getAttribute('aria-labelledby')).toBe(botao.id);
+    });
+    expect(botoes()[0].closest('h3').classList.contains('acordeao__titulo')).toBe(true);
+    expect(paineis()[1].textContent.trim()).toBe('Texto 2');
+  });
+
+  it('abrir o 2º item fecha o 1º (só um aberto por vez)', () => {
+    botoes()[0].click();
+    expect(botoes()[0].getAttribute('aria-expanded')).toBe('true');
+    expect(paineis()[0].classList.contains('acordeao__painel--aberto')).toBe(true);
+
+    botoes()[1].click();
+    expect(botoes()[0].getAttribute('aria-expanded')).toBe('false');
+    expect(botoes()[1].getAttribute('aria-expanded')).toBe('true');
+    expect(paineis()[0].classList.contains('acordeao__painel--aberto')).toBe(false);
+    expect(elemento[0].querySelectorAll('.acordeao__painel--aberto')).toHaveLength(1);
+  });
+
+  it('clicar no item aberto o fecha', () => {
+    botoes()[2].click();
+    botoes()[2].click();
+    expect(botoes()[2].getAttribute('aria-expanded')).toBe('false');
+    expect(elemento[0].querySelectorAll('.acordeao__painel--aberto')).toHaveLength(0);
+  });
+
+  it('o painel não usa ng-show nem ng-if', () => {
+    paineis().forEach((painel) => {
+      expect(painel.classList.contains('ng-hide')).toBe(false);
+    });
+    expect(elemento[0].querySelectorAll('[ng-show], [ng-if]')).toHaveLength(0);
+  });
+});
+
+describe('paginacao', () => {
+  let $rootScope;
+  let escopo;
+  let elemento;
+
+  beforeEach(() => {
+    const $injector = criarInjetor();
+    $rootScope = $injector.get('$rootScope');
+    escopo = $rootScope.$new();
+    escopo.total = 4;
+    escopo.atual = 1;
+    // Como o controlador do catálogo: o pai é quem muda a página.
+    escopo.irPara = vi.fn((pagina) => {
+      escopo.atual = pagina;
+    });
+    elemento = $injector.get('$compile')(
+      '<paginacao total-paginas="total" pagina-atual="atual" on-mudar-pagina="irPara(pagina)" rotulo="Paginação de teste"></paginacao>'
+    )(escopo);
+    document.body.appendChild(elemento[0]);
+    escopo.$digest();
+  });
+
+  afterEach(() => {
+    $rootScope.$destroy();
+    elemento.remove();
+  });
+
+  function botao(rotulo) {
+    return elemento[0].querySelector('[aria-label="' + rotulo + '"]');
+  }
+
+  function comAriaCurrent() {
+    return [...elemento[0].querySelectorAll('[aria-current]')];
+  }
+
+  it('renderiza o nav com o rótulo e um botão por página', () => {
+    expect(elemento[0].querySelector('nav.paginacao').getAttribute('aria-label')).toBe('Paginação de teste');
+    expect(elemento[0].querySelectorAll('.paginacao__botao')).toHaveLength(6);
+    expect(botao('Página 4').textContent).toBe('4');
+  });
+
+  it('na página 1, "Anterior" fica disabled e aria-current="page" fica só no botão 1', () => {
+    expect(botao('Página anterior').disabled).toBe(true);
+    expect(botao('Próxima página').disabled).toBe(false);
+    expect(comAriaCurrent()).toEqual([botao('Página 1')]);
+    expect(botao('Página 1').getAttribute('aria-current')).toBe('page');
+    expect(botao('Página 1').classList.contains('paginacao__botao--atual')).toBe(true);
+  });
+
+  it('clicar no 3 chama o callback com 3', () => {
+    botao('Página 3').click();
+    expect(escopo.irPara).toHaveBeenCalledWith(3);
+    expect(comAriaCurrent()).toEqual([botao('Página 3')]);
+  });
+
+  it('na última página, "Próxima" fica disabled e o foco vai para a página atual', () => {
+    escopo.atual = 3;
+    escopo.$digest();
+    botao('Próxima página').focus();
+    botao('Próxima página').click();
+
+    expect(escopo.irPara).toHaveBeenCalledWith(4);
+    expect(botao('Próxima página').disabled).toBe(true);
+    expect(botao('Página anterior').disabled).toBe(false);
+    expect(document.activeElement).toBe(botao('Página 4'));
+  });
+
+  it('ignora a página atual e nunca muda a página por conta própria', () => {
+    botao('Página 1').click();
+    expect(escopo.irPara).not.toHaveBeenCalled();
+
+    escopo.irPara.mockImplementation(() => {}); // pai que não aceita a mudança
+    botao('Página 2').click();
+    expect(escopo.irPara).toHaveBeenCalledWith(2);
+    expect(comAriaCurrent()).toEqual([botao('Página 1')]);
+  });
+
+  it('recalcula as páginas quando o total muda; com 1 página, os dois extremos ficam disabled', () => {
+    escopo.total = 1;
+    escopo.$digest();
+    expect(elemento[0].querySelectorAll('.paginacao__botao')).toHaveLength(3);
+    expect(botao('Página anterior').disabled).toBe(true);
+    expect(botao('Próxima página').disabled).toBe(true);
+  });
+});
