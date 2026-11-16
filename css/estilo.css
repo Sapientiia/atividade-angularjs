@@ -1,0 +1,725 @@
+:root {
+  /* ---- Cores de marca e estados: preset default.scss (Moodle v4.5.16) ---- */
+  --cor-primaria: #0f6cbf;               /* $primary = $blue */
+  --cor-primaria-hover: #0c589c;         /* .btn-primary:hover background (compilado) */
+  --cor-primaria-borda-hover: #0b5190;   /* .btn-primary:hover border (compilado) */
+  --cor-primaria-ativa: #0b5190;         /* .btn-primary:active background (compilado) */
+  --cor-primaria-borda-ativa: #0a4b84;   /* .btn-primary:active border (compilado) */
+  --cor-link-hover: #094478;             /* darken(#0f6cbf, 15%) (compilado) */
+  --cor-sucesso: #357a32;                /* $success = $green */
+  --cor-perigo: #ca3120;                 /* $danger = $red */
+  --cor-info: #008196;                   /* $info = $cyan */
+
+  /* ---- Cinzas: Bootstrap 4.6.2 com overrides do preset ---- */
+  --branco: #fff;
+  --cinza-100: #f8f9fa;
+  --cinza-200: #e9ecef;
+  --cinza-300: #dee2e6;
+  --cinza-400: #ced4da;
+  --cinza-500: #8f959e;
+  --cinza-600: #6a737b;
+  --cinza-700: #495057;
+  --cinza-800: #343a40;
+  --cinza-900: #1d2125;
+
+  /* ---- Papéis (aliases; o CSS dos componentes usa estes) ---- */
+  --cor-fundo: var(--branco);                  /* $body-bg */
+  --cor-fundo-secundario: var(--cinza-100);    /* hover/ativo da navegação, rodapé */
+  --cor-texto: var(--cinza-900);               /* $body-color */
+  --cor-texto-secundario: var(--cinza-700);    /* texto de .form-control */
+  --cor-texto-suave: var(--cinza-600);         /* $text-muted, desabilitado */
+  --cor-borda: var(--cinza-300);               /* $border-color */
+  --cor-borda-campo: var(--cinza-500);         /* $input-border-color (Moodle) */
+  --cor-borda-cartao: rgba(0, 0, 0, .125);     /* .card border */
+  --cor-borda-menu: rgba(0, 0, 0, .15);        /* .dropdown-menu border */
+  --cor-trilho: var(--cinza-200);              /* .progress background */
+  --cor-pagina-hover: var(--cinza-200);        /* .page-link:hover background */
+
+  /* ---- Botão secundário e de contorno ---- */
+  --cor-secundaria: var(--cinza-400);          /* $secondary = $gray-400 */
+  --cor-secundaria-hover: #b8c1ca;             /* compilado */
+  --cor-secundaria-borda-hover: #b1bbc4;       /* compilado */
+  --cor-secundaria-ativa: #b1bbc4;             /* calculado: darken(#ced4da, 10%) */
+  --cor-secundaria-borda-ativa: #aab4be;       /* calculado: darken(#ced4da, 12.5%) */
+  --cor-contorno-secundario: var(--cinza-600); /* .btn-outline-secondary (override do preset) */
+
+  /* ---- Toast: moodle/toasts.scss ---- */
+  --toast-sucesso-fundo: rgba(215, 228, 214, .95);
+  --toast-sucesso-texto: #1b3d19;
+  --toast-erro-fundo: rgba(244, 214, 210, .95);
+  --toast-erro-texto: #651910;
+  --toast-info-fundo: rgba(204, 230, 234, .95);
+  --toast-info-texto: #00414b;
+  --toast-borda: rgba(0, 0, 0, .1);
+
+  /* ---- Foco: anel do Boost ($input-btn-focus-color) ---- */
+  --anel-foco: 0 0 0 .2rem rgba(15, 108, 191, .75);
+  --anel-foco-interno: inset 0 0 0 .2rem rgba(15, 108, 191, .75);
+
+  /* ---- Tipografia ---- */
+  --fonte: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial,
+    "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol", "Noto Color Emoji";
+  --fonte-base: .9375rem;          /* $font-size-base, 15 px */
+  --fonte-h4: 1.40625rem;          /* h4, 22,5 px: títulos de seção (h2 da página) */
+  --fonte-h5: 1.171875rem;         /* h5, 18,75 px: títulos de cartão e marca */
+  --fonte-pequena: .875em;         /* $small-font-size */
+  --fonte-toast: .875rem;          /* .toast */
+  --peso-normal: 400;
+  --peso-negrito: 700;             /* $headings-font-weight (Moodle) */
+  --altura-linha: 1.5;
+  --altura-linha-titulo: 1.2;
+  --altura-linha-paginacao: 1.25;
+
+  /* ---- Espaçamento: $spacer 1rem, escala do preset 0–6 ---- */
+  --espaco-1: .25rem;
+  --espaco-2: .5rem;
+  --espaco-3: 1rem;
+  --espaco-4: 1.5rem;
+  --espaco-5: 2rem;
+  --espaco-6: 3rem;
+  --cartao-padding: 1.25rem;       /* .card-body */
+  --btn-padding: .375rem .75rem;   /* .btn */
+  --campo-padding: .375rem .75rem; /* .form-control */
+  --pagina-padding: .5rem .75rem;  /* .page-link */
+  --aba-padding: .5rem 1rem;       /* .nav-link */
+  --item-menu-padding: .25rem 1.5rem; /* .dropdown-item */
+  --tabela-padding: .75rem;        /* .table td/th */
+
+  /* ---- Raios (nenhum acima de .5rem = 8 px) ---- */
+  --raio-pequeno: .2rem;           /* $border-radius-sm */
+  --raio-toast: .25rem;            /* .toast */
+  --raio: .5rem;                   /* $border-radius (Moodle): cartão, botão, campo, menu, paginação, progresso */
+
+  /* ---- Bordas ---- */
+  --borda: 1px solid var(--cor-borda);
+  --borda-cartao: 1px solid var(--cor-borda-cartao);
+  --borda-indicador: 3px;          /* .moremenu .nav-link border-bottom */
+
+  /* ---- Sombra: a única do projeto ---- */
+  --sombra-toast: 0 .25rem .75rem rgba(0, 0, 0, .1);
+
+  /* ---- Layout ---- */
+  --largura-conteudo: 1120px;      /* $medium-content-maxwidth */
+  --largura-texto: 830px;          /* $course-content-maxwidth */
+  --altura-navbar: 60px;           /* $navbar-height */
+  --altura-cabecalho: 61px;        /* 60 + 1 de borda (.navbar.fixed-top compilado) */
+  --margem-lateral: 1rem;
+  --toast-largura: 350px;          /* .toast / .toast-wrapper max-width */
+
+  /* ---- Movimento ---- */
+  --transicao-controle: .15s ease-in-out; /* .btn */
+  --transicao-colapso: .35s ease;         /* .collapsing */
+  --transicao-progresso: .6s ease;        /* .progress-bar */
+  --transicao-toast: .15s linear;         /* $transition-fade do Bootstrap 4.6.2 */
+
+  /* ---- Camadas ---- */
+  --z-menu: 1000;                  /* $zindex-dropdown */
+  --z-cabecalho: 1020;             /* $zindex-sticky */
+  --z-toast: 1051;                 /* .toast-wrapper (Moodle) */
+  --z-salto: 1100;                 /* link "Ir para o conteúdo" (adaptação) */
+}
+
+/* RFS do Boost ($enable-responsive-font-sizes: true), mesmo limite do CSS compilado */
+@media (max-width: 1200px) {
+  :root {
+    --fonte-base: calc(.90375rem + .045vw);      /* compilado */
+    --fonte-h4: calc(.950625rem + .6075vw);      /* compilado */
+    --fonte-h5: calc(.9271875rem + .32625vw);    /* calculado pela fórmula do RFS */
+  }
+}
+
+/* Cabeçalho em duas linhas abaixo de 768 px (seção 3.2) */
+@media (max-width: 767.98px) {
+  :root {
+    --altura-cabecalho: 106px;     /* 60 + 1 + 44 + 1 */
+  }
+}
+
+@media (min-width: 768px) {
+  :root {
+    --margem-lateral: 1.5rem;
+  }
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--fonte);
+  font-size: var(--fonte-base);
+  font-weight: var(--peso-normal);
+  line-height: var(--altura-linha);
+  color: var(--cor-texto);
+  background: var(--cor-fundo);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h2 {
+  margin: 0 0 var(--espaco-3);
+  font-size: var(--fonte-h4);
+  font-weight: var(--peso-negrito);
+  line-height: var(--altura-linha-titulo);
+}
+
+h3 {
+  margin: 0 0 var(--espaco-2);
+  font-size: var(--fonte-h5);
+  font-weight: var(--peso-negrito);
+  line-height: var(--altura-linha-titulo);
+}
+
+p {
+  margin: 0 0 var(--espaco-3);
+}
+
+a {
+  color: var(--cor-primaria);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--cor-link-hover);
+  text-decoration: underline;
+}
+
+a:focus-visible {
+  border-radius: var(--raio-pequeno);
+}
+
+.container {
+  max-width: var(--largura-conteudo);
+  margin-inline: auto;
+  padding-inline: var(--margem-lateral);
+}
+
+/* Cada seção da página. O scroll-margin-top impede que o título fique
+   escondido sob o cabeçalho fixo ao seguir uma âncora (#perfil etc.). */
+.secao {
+  padding-block: var(--espaco-5);
+  scroll-margin-top: var(--altura-cabecalho);
+}
+
+.secao + .secao {
+  border-top: var(--borda);
+}
+
+/* ==========================================================================
+   Utilitários e regras globais
+   ========================================================================== */
+
+/* Esconde da tela, mas mantém para leitores de tela (.sr-only do Bootstrap 4). */
+.visualmente-oculto {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Esconde o HTML ainda não compilado até o AngularJS terminar o bootstrap. */
+[ng-cloak] {
+  display: none !important;
+}
+
+/* Anel de foco único para todos os elementos focáveis pelo teclado. */
+:focus-visible {
+  outline: 0;
+  box-shadow: var(--anel-foco);
+}
+
+/* Única regra ligada às tags das diretivas: o navegador trata tags
+   desconhecidas como inline, e estas precisam ocupar a linha inteira.
+   menu-suspenso fica inline: o display vem do contexto onde ele é usado. */
+acordeao,
+paginacao,
+barra-progresso,
+abas,
+aba,
+toast-container {
+  display: block;
+}
+
+/* ==========================================================================
+   Ícones (SVG inline, cor herdada do texto)
+   ========================================================================== */
+
+.icone {
+  flex: none;
+  width: 1rem;
+  height: 1rem;
+}
+
+.icone--chevron-pequeno,
+.icone--check {
+  width: .75rem;
+  height: .75rem;
+}
+
+/* Glifo vazado em branco sobre o círculo cheio dos ícones do toast. */
+.icone__glifo {
+  stroke: var(--branco);
+}
+
+.icone__ponto {
+  fill: var(--branco);
+}
+
+/* ==========================================================================
+   Link de salto ("Ir para o conteúdo")
+   ========================================================================== */
+
+.salto {
+  position: absolute;
+  top: 0;
+  left: -10000px;
+}
+
+.salto:focus {
+  position: fixed;
+  top: var(--espaco-2);
+  left: var(--espaco-2);
+  z-index: var(--z-salto);
+  padding: var(--espaco-2) var(--espaco-3);
+  color: var(--cor-primaria);
+  background: var(--branco);
+  border: var(--borda);
+  border-radius: var(--raio);
+  outline: 0;
+  box-shadow: var(--anel-foco);
+}
+
+/* ==========================================================================
+   Botões
+   ========================================================================== */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espaco-2);
+  padding: var(--btn-padding);
+  font: inherit;
+  font-size: var(--fonte-base);
+  font-weight: var(--peso-normal);
+  line-height: var(--altura-linha);
+  color: var(--cor-texto);
+  white-space: nowrap;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--raio);
+  cursor: pointer;
+  transition:
+    color var(--transicao-controle),
+    background-color var(--transicao-controle),
+    border-color var(--transicao-controle),
+    box-shadow var(--transicao-controle);
+}
+
+.btn:focus-visible {
+  outline: 0;
+  box-shadow: var(--anel-foco);
+}
+
+.btn:disabled {
+  opacity: .65;
+  cursor: default;
+}
+
+.btn--primario {
+  color: var(--branco);
+  background: var(--cor-primaria);
+  border-color: var(--cor-primaria);
+}
+
+.btn--primario:hover:not(:disabled) {
+  background: var(--cor-primaria-hover);
+  border-color: var(--cor-primaria-borda-hover);
+}
+
+.btn--primario:active:not(:disabled) {
+  background: var(--cor-primaria-ativa);
+  border-color: var(--cor-primaria-borda-ativa);
+}
+
+.btn--secundario {
+  color: var(--cor-texto);
+  background: var(--cor-secundaria);
+  border-color: var(--cor-secundaria);
+}
+
+.btn--secundario:hover:not(:disabled) {
+  background: var(--cor-secundaria-hover);
+  border-color: var(--cor-secundaria-borda-hover);
+}
+
+.btn--secundario:active:not(:disabled) {
+  background: var(--cor-secundaria-ativa);
+  border-color: var(--cor-secundaria-borda-ativa);
+}
+
+.btn--contorno {
+  color: var(--cor-contorno-secundario);
+  background: var(--branco);
+  border-color: var(--cor-contorno-secundario);
+}
+
+.btn--contorno:hover:not(:disabled),
+.btn--contorno:active:not(:disabled) {
+  color: var(--branco);
+  background: var(--cor-contorno-secundario);
+}
+
+/* Botão de texto. O botão do menu da conta recebe as mesmas regras pelo
+   contexto (.cabecalho), sem precisar de um binding a mais na diretiva. */
+.btn--texto,
+.cabecalho .menu-suspenso__botao {
+  color: var(--cor-texto);
+  background: transparent;
+  border-color: transparent;
+}
+
+.btn--texto:hover,
+.cabecalho .menu-suspenso__botao:hover,
+.cabecalho .menu-suspenso__botao[aria-expanded="true"] {
+  background: var(--cor-fundo-secundario);
+}
+
+.btn--texto:active,
+.cabecalho .menu-suspenso__botao:active {
+  background: var(--cinza-200);
+}
+
+/* ==========================================================================
+   Cabeçalho (navbar)
+   ========================================================================== */
+
+/* sticky: o cabeçalho acompanha a rolagem sem precisar de padding no body. */
+.cabecalho {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-cabecalho);
+  background: var(--branco);
+  border-bottom: var(--borda);
+}
+
+/* Abaixo de 768 px: linha 1 com marca e conta; os links quebram para a linha 2. */
+.navbar__conteudo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.navbar__marca {
+  display: flex;
+  align-items: center;
+  min-height: var(--altura-navbar);
+  margin-right: var(--espaco-3);
+}
+
+.navbar__nome {
+  font-size: var(--fonte-h5);
+  font-weight: var(--peso-negrito);
+  line-height: var(--altura-linha-titulo);
+  color: var(--cor-texto);
+  white-space: nowrap;
+}
+
+/* O subtítulo e o separador só aparecem a partir de 992 px. */
+.navbar__subtitulo {
+  display: none;
+  align-items: center;
+  font-size: var(--fonte-base);
+  color: var(--cor-texto-secundario);
+  white-space: nowrap;
+}
+
+.navbar__subtitulo::before {
+  content: "";
+  width: 1px;
+  height: 1.125em;
+  margin-inline: var(--espaco-3);
+  background: var(--cor-borda);
+}
+
+/* Linha dos links abaixo de 768 px: ocupa a largura toda da tela (as margens
+   negativas anulam o recuo do .container) e rola na horizontal se faltar espaço. */
+.navbar__nav {
+  order: 3;
+  flex: 0 0 calc(100% + 2 * var(--margem-lateral));
+  margin-inline: calc(-1 * var(--margem-lateral));
+  padding-inline: var(--margem-lateral);
+  overflow-x: auto;
+  border-top: var(--borda);
+}
+
+.navbar__links {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.navbar__link {
+  display: flex;
+  align-items: center;
+  height: 44px;
+  padding-inline: .75rem;
+  color: var(--cor-texto);
+  white-space: nowrap;
+  border-bottom: var(--borda-indicador) solid transparent;
+  transition: background-color var(--transicao-controle), box-shadow var(--transicao-controle);
+}
+
+.navbar__link:hover,
+.navbar__link:focus-visible {
+  color: var(--cor-texto);
+  text-decoration: none;
+  background: var(--cor-fundo-secundario);
+}
+
+/* Anel interno: o anel externo seria cortado pela borda do cabeçalho. */
+.navbar__link:focus-visible {
+  border-radius: 0;
+  box-shadow: var(--anel-foco-interno);
+}
+
+.navbar__link:active {
+  background: var(--cinza-200);
+}
+
+.navbar__conta {
+  margin-left: auto;
+}
+
+/* A partir de 768 px: uma linha só, com os links entre a marca e a conta. */
+@media (min-width: 768px) {
+  .navbar__conteudo {
+    flex-wrap: nowrap;
+  }
+
+  .navbar__nav {
+    order: 0;
+    flex: none;
+    margin-inline: 0;
+    padding-inline: 0;
+    overflow-x: visible;
+    border-top: 0;
+  }
+
+  .navbar__link {
+    height: var(--altura-navbar);
+  }
+}
+
+@media (min-width: 992px) {
+  .navbar__subtitulo {
+    display: inline-flex;
+  }
+}
+
+/* ==========================================================================
+   Rodapé
+   ========================================================================== */
+
+.rodape {
+  padding-block: var(--espaco-4);
+  font-size: var(--fonte-pequena);
+  color: var(--cor-texto-suave);
+  background: var(--cor-fundo-secundario);
+  border-top: var(--borda);
+}
+
+.rodape__texto {
+  margin: 0;
+}
+
+/* ==========================================================================
+   Componente: menu suspenso
+   ========================================================================== */
+
+.menu-suspenso {
+  position: relative;
+  display: inline-block;
+}
+
+/* O chevron gira com o menu aberto, sem transição (como no Boost). */
+.menu-suspenso__botao[aria-expanded="true"] .icone--chevron-pequeno {
+  transform: rotate(180deg);
+}
+
+.menu-suspenso__lista {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: var(--z-menu);
+  min-width: 10rem;
+  width: max-content;
+  margin: .125rem 0 0;
+  padding: var(--espaco-2) 0;
+  list-style: none;
+  background: var(--branco);
+  border: 1px solid var(--cor-borda-menu);
+  border-radius: var(--raio);
+}
+
+/* Na navbar, a lista se alinha pela direita do botão. */
+.cabecalho .menu-suspenso__lista {
+  right: 0;
+  left: auto;
+}
+
+.menu-suspenso__item {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: var(--item-menu-padding);
+  font: inherit;
+  font-weight: var(--peso-normal);
+  color: var(--cor-texto);
+  text-align: left;
+  white-space: nowrap;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  transition: color var(--transicao-controle), background-color var(--transicao-controle);
+}
+
+.menu-suspenso__item:hover,
+.menu-suspenso__item:focus,
+.menu-suspenso__item:active {
+  color: var(--branco);
+  background: var(--cor-primaria);
+}
+
+/* O fundo azul já indica o item em foco; o anel global não é necessário aqui. */
+.menu-suspenso__item:focus-visible {
+  box-shadow: none;
+}
+
+.menu-suspenso__check {
+  position: absolute;
+  top: 50%;
+  left: .4rem;
+  transform: translateY(-50%);
+}
+
+/* ==========================================================================
+   Componente: toast
+   ========================================================================== */
+
+/* pointer-events: none deixa o contêiner vazio sem bloquear cliques na página. */
+.toasts {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  z-index: var(--z-toast);
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-2);
+  width: calc(100% - 2rem);
+  max-width: var(--toast-largura);
+  padding-top: var(--espaco-3);
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.toast {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--espaco-2);
+  padding: .75rem;
+  font-size: var(--fonte-toast);
+  border: 1px solid var(--toast-borda);
+  border-radius: var(--raio-toast);
+  box-shadow: var(--sombra-toast);
+  pointer-events: auto;
+  animation: toast-entrada var(--transicao-toast);
+  transition: opacity var(--transicao-toast);
+}
+
+@keyframes toast-entrada {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+/* Aplicada pelo ToastService 150 ms antes de remover o toast da fila. */
+.toast--saindo {
+  opacity: 0;
+}
+
+.toast--sucesso {
+  color: var(--toast-sucesso-texto);
+  background: var(--toast-sucesso-fundo);
+}
+
+.toast--erro {
+  color: var(--toast-erro-texto);
+  background: var(--toast-erro-fundo);
+}
+
+.toast--info {
+  color: var(--toast-info-texto);
+  background: var(--toast-info-fundo);
+}
+
+.toast__icone {
+  margin-top: .1rem;
+}
+
+.toast__mensagem {
+  flex: 1;
+  margin: 0;
+}
+
+.toast__fechar {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  color: inherit;
+  background: transparent;
+  border: 0;
+  border-radius: var(--raio-pequeno);
+  opacity: .75;
+  cursor: pointer;
+}
+
+.toast__fechar:hover,
+.toast__fechar:focus-visible,
+.toast__fechar:active {
+  opacity: 1;
+}
+
+/* ==========================================================================
+   Movimento reduzido: desliga todas as transições e animações
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+}

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Portal do Aluno — Faculdade Itapuã</title>
+  <!-- Ícone vazio: evita o pedido automático de /favicon.ico, que daria 404. -->
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="css/estilo.css">
+</head>
+<!--
+  ng-app="portal": inicia o AngularJS com o módulo principal (app/app.js).
+  ng-strict-di: exige anotação em array em toda função injetável.
+  ng-cloak: esconde a página até o AngularJS compilar os templates.
+-->
+<body ng-app="portal" ng-strict-di ng-cloak>
+  <a class="salto" href="#conteudo">Ir para o conteúdo</a>
+
+  <header class="cabecalho" ng-controller="ContaController as conta">
+    <div class="navbar">
+      <div class="container navbar__conteudo">
+        <div class="navbar__marca">
+          <span class="navbar__nome">Faculdade Itapuã</span>
+          <span class="navbar__subtitulo">Portal do Aluno</span>
+        </div>
+
+        <nav class="navbar__nav" aria-label="Seções do portal">
+          <ul class="navbar__links">
+            <li><a class="navbar__link" href="#painel">Painel</a></li>
+            <li><a class="navbar__link" href="#disciplinas">Disciplinas</a></li>
+            <li><a class="navbar__link" href="#perfil">Perfil</a></li>
+            <li><a class="navbar__link" href="#ajuda">Ajuda</a></li>
+          </ul>
+        </nav>
+
+        <div class="navbar__conta">
+          <!-- rotulo usa @ (texto interpolado); opcoes usa < (lista do controlador). -->
+          <menu-suspenso rotulo="{{ conta.nomeCurto }}" opcoes="conta.opcoes"></menu-suspenso>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="conteudo" tabindex="-1">
+    <h1 class="visualmente-oculto">Portal do Aluno — Faculdade Itapuã</h1>
+
+    <section id="painel" class="secao" aria-labelledby="titulo-painel">
+      <div class="container">
+        <h2 id="titulo-painel" tabindex="-1">Painel</h2>
+      </div>
+    </section>
+
+    <section id="disciplinas" class="secao" aria-labelledby="titulo-disciplinas">
+      <div class="container">
+        <h2 id="titulo-disciplinas" tabindex="-1">Disciplinas ofertadas — 2027.1</h2>
+      </div>
+    </section>
+
+    <section id="perfil" class="secao" aria-labelledby="titulo-perfil">
+      <div class="container">
+        <h2 id="titulo-perfil" tabindex="-1">Perfil do aluno</h2>
+      </div>
+    </section>
+
+    <section id="ajuda" class="secao" aria-labelledby="titulo-ajuda">
+      <div class="container">
+        <h2 id="titulo-ajuda" tabindex="-1">Ajuda da secretaria</h2>
+      </div>
+    </section>
+  </main>
+
+  <footer class="rodape">
+    <div class="container">
+      <p class="rodape__texto">Faculdade Itapuã — Portal do Aluno. Dados fictícios, para fins acadêmicos.</p>
+    </div>
+  </footer>
+
+  <!-- Região das notificações, fora dos controladores: lê a fila do ToastService. -->
+  <toast-container></toast-container>
+
+  <script src="https://cdn.jsdelivr.net/npm/angular@1.8.3/angular.min.js"
+          integrity="sha384-quGekMf1ic6tIOn1GgLl0Pzra4ZkFyTcaDW3hZRjORqPQe3HnTKGl+lNPpuh7Lwv"
+          crossorigin="anonymous"></script>
+
+  <!-- 1. Módulo principal e módulos de cada camada -->
+  <script src="app/app.js"></script>
+  <script src="app/filtros/filtros.module.js"></script>
+  <script src="app/servicos/servicos.module.js"></script>
+  <script src="app/componentes/componentes.module.js"></script>
+  <script src="app/controladores/controladores.module.js"></script>
+
+  <!-- 2. Filtros -->
+  <script src="app/filtros/carga-horaria.filter.js"></script>
+  <script src="app/filtros/moeda.filter.js"></script>
+  <script src="app/filtros/nota.filter.js"></script>
+
+  <!-- 3. Serviços -->
+  <script src="app/servicos/disciplinas.service.js"></script>
+  <script src="app/servicos/aluno.service.js"></script>
+  <script src="app/servicos/secretaria.service.js"></script>
+  <script src="app/servicos/toast.service.js"></script>
+
+  <!-- 4. Componentes (diretivas) -->
+  <script src="app/componentes/menu-suspenso/menu-suspenso.directive.js"></script>
+  <script src="app/componentes/toast/toast-container.directive.js"></script>
+
+  <!-- 5. Controladores -->
+  <script src="app/controladores/conta.controller.js"></script>
+</body>
+</html>
