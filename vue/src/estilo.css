@@ -1,0 +1,1635 @@
+:root {
+  /* ---- Cores de marca e estados: preset default.scss (Moodle v4.5.16) ---- */
+  --cor-primaria: #0f6cbf;               /* $primary = $blue */
+  --cor-primaria-hover: #0c589c;         /* .btn-primary:hover background (compilado) */
+  --cor-primaria-borda-hover: #0b5190;   /* .btn-primary:hover border (compilado) */
+  --cor-primaria-ativa: #0b5190;         /* .btn-primary:active background (compilado) */
+  --cor-primaria-borda-ativa: #0a4b84;   /* .btn-primary:active border (compilado) */
+  --cor-link-hover: #094478;             /* darken(#0f6cbf, 15%) (compilado) */
+  --cor-sucesso: #357a32;                /* $success = $green */
+  --cor-perigo: #ca3120;                 /* $danger = $red */
+  --cor-info: #008196;                   /* $info = $cyan */
+
+  /* ---- Cinzas: Bootstrap 4.6.2 com overrides do preset ---- */
+  --branco: #fff;
+  --cinza-100: #f8f9fa;
+  --cinza-200: #e9ecef;
+  --cinza-300: #dee2e6;
+  --cinza-400: #ced4da;
+  --cinza-500: #8f959e;
+  --cinza-600: #6a737b;
+  --cinza-700: #495057;
+  --cinza-800: #343a40;
+  --cinza-900: #1d2125;
+
+  /* ---- Papéis (aliases; o CSS dos componentes usa estes) ---- */
+  --cor-fundo: var(--branco);                  /* $body-bg */
+  --cor-fundo-secundario: var(--cinza-100);    /* hover/ativo da navegação, rodapé */
+  --cor-texto: var(--cinza-900);               /* $body-color */
+  --cor-texto-secundario: var(--cinza-700);    /* texto de .form-control */
+  --cor-texto-suave: var(--cinza-600);         /* $text-muted, desabilitado */
+  --cor-borda: var(--cinza-300);               /* $border-color */
+  --cor-borda-campo: var(--cinza-500);         /* $input-border-color (Moodle) */
+  --cor-borda-cartao: rgba(0, 0, 0, .125);     /* .card border */
+  --cor-borda-menu: rgba(0, 0, 0, .15);        /* .dropdown-menu border */
+  --cor-trilho: var(--cinza-200);              /* .progress background */
+  --cor-pagina-hover: var(--cinza-200);        /* .page-link:hover background */
+
+  /* ---- Botão secundário e de contorno ---- */
+  --cor-secundaria: var(--cinza-400);          /* $secondary = $gray-400 */
+  --cor-secundaria-hover: #b8c1ca;             /* compilado */
+  --cor-secundaria-borda-hover: #b1bbc4;       /* compilado */
+  --cor-secundaria-ativa: #b1bbc4;             /* calculado: darken(#ced4da, 10%) */
+  --cor-secundaria-borda-ativa: #aab4be;       /* calculado: darken(#ced4da, 12.5%) */
+  --cor-contorno-secundario: var(--cinza-600); /* .btn-outline-secondary (override do preset) */
+
+  /* ---- Toast: moodle/toasts.scss ---- */
+  --toast-sucesso-fundo: rgba(215, 228, 214, .95);
+  --toast-sucesso-texto: #1b3d19;
+  --toast-erro-fundo: rgba(244, 214, 210, .95);
+  --toast-erro-texto: #651910;
+  --toast-info-fundo: rgba(204, 230, 234, .95);
+  --toast-info-texto: #00414b;
+  --toast-borda: rgba(0, 0, 0, .1);
+
+  /* ---- Foco: anel do Boost ($input-btn-focus-color) ---- */
+  --anel-foco: 0 0 0 .2rem rgba(15, 108, 191, .75);
+  --anel-foco-interno: inset 0 0 0 .2rem rgba(15, 108, 191, .75);
+
+  /* ---- Tipografia ---- */
+  --fonte: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial,
+    "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol", "Noto Color Emoji";
+  --fonte-base: .9375rem;          /* $font-size-base, 15 px */
+  --fonte-h4: 1.40625rem;          /* h4, 22,5 px: títulos de seção (h2 da página) */
+  --fonte-h5: 1.171875rem;         /* h5, 18,75 px: títulos de cartão e marca */
+  --fonte-pequena: .875em;         /* $small-font-size */
+  --fonte-toast: .875rem;          /* .toast */
+  --peso-normal: 400;
+  --peso-negrito: 700;             /* $headings-font-weight (Moodle) */
+  --altura-linha: 1.5;
+  --altura-linha-titulo: 1.2;
+  --altura-linha-paginacao: 1.25;
+
+  /* ---- Espaçamento: $spacer 1rem, escala do preset 0–6 ---- */
+  --espaco-1: .25rem;
+  --espaco-2: .5rem;
+  --espaco-3: 1rem;
+  --espaco-4: 1.5rem;
+  --espaco-5: 2rem;
+  --espaco-6: 3rem;
+  --cartao-padding: 1.25rem;       /* .card-body */
+  --btn-padding: .375rem .75rem;   /* .btn */
+  --campo-padding: .375rem .75rem; /* .form-control */
+  --pagina-padding: .5rem .75rem;  /* .page-link */
+  --aba-padding: .5rem 1rem;       /* .nav-link */
+  --item-menu-padding: .25rem 1.5rem; /* .dropdown-item */
+  --tabela-padding: .75rem;        /* .table td/th */
+
+  /* ---- Raios (nenhum acima de .5rem = 8 px) ---- */
+  --raio-pequeno: .2rem;           /* $border-radius-sm */
+  --raio-toast: .25rem;            /* .toast */
+  --raio: .5rem;                   /* $border-radius (Moodle): cartão, botão, campo, menu, paginação, progresso */
+
+  /* ---- Bordas ---- */
+  --borda: 1px solid var(--cor-borda);
+  --borda-cartao: 1px solid var(--cor-borda-cartao);
+  --borda-indicador: 3px;          /* .moremenu .nav-link border-bottom */
+
+  /* ---- Sombra: a única do projeto ---- */
+  --sombra-toast: 0 .25rem .75rem rgba(0, 0, 0, .1);
+
+  /* ---- Layout ---- */
+  --largura-conteudo: 1120px;      /* $medium-content-maxwidth */
+  --largura-texto: 830px;          /* $course-content-maxwidth */
+  --altura-navbar: 60px;           /* $navbar-height */
+  --altura-cabecalho: 61px;        /* 60 + 1 de borda (.navbar.fixed-top compilado) */
+  --margem-lateral: 1rem;
+  --toast-largura: 350px;          /* .toast / .toast-wrapper max-width */
+
+  /* ---- Movimento ---- */
+  --transicao-controle: .15s ease-in-out; /* .btn */
+  --transicao-colapso: .35s ease;         /* .collapsing */
+  --transicao-progresso: .6s ease;        /* .progress-bar */
+  --transicao-toast: .15s linear;         /* $transition-fade do Bootstrap 4.6.2 */
+
+  /* ---- Camadas ---- */
+  --z-menu: 1000;                  /* $zindex-dropdown */
+  --z-cabecalho: 1020;             /* $zindex-sticky */
+  --z-toast: 1051;                 /* .toast-wrapper (Moodle) */
+  --z-salto: 1100;                 /* link "Ir para o conteúdo" (adaptação) */
+}
+
+/* RFS do Boost ($enable-responsive-font-sizes: true), mesmo limite do CSS compilado */
+@media (max-width: 1200px) {
+  :root {
+    --fonte-base: calc(.90375rem + .045vw);      /* compilado */
+    --fonte-h4: calc(.950625rem + .6075vw);      /* compilado */
+    --fonte-h5: calc(.9271875rem + .32625vw);    /* calculado pela fórmula do RFS */
+  }
+}
+
+/* Cabeçalho em duas linhas abaixo de 768 px (seção 3.2) */
+@media (max-width: 767.98px) {
+  :root {
+    --altura-cabecalho: 106px;     /* 60 + 1 + 44 + 1 */
+  }
+}
+
+@media (min-width: 768px) {
+  :root {
+    --margem-lateral: 1.5rem;
+  }
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--fonte);
+  font-size: var(--fonte-base);
+  font-weight: var(--peso-normal);
+  line-height: var(--altura-linha);
+  color: var(--cor-texto);
+  background: var(--cor-fundo);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h2 {
+  margin: 0 0 var(--espaco-3);
+  font-size: var(--fonte-h4);
+  font-weight: var(--peso-negrito);
+  line-height: var(--altura-linha-titulo);
+}
+
+h3 {
+  margin: 0 0 var(--espaco-2);
+  font-size: var(--fonte-h5);
+  font-weight: var(--peso-negrito);
+  line-height: var(--altura-linha-titulo);
+}
+
+p {
+  margin: 0 0 var(--espaco-3);
+}
+
+a {
+  color: var(--cor-primaria);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--cor-link-hover);
+  text-decoration: underline;
+}
+
+a:focus-visible {
+  border-radius: var(--raio-pequeno);
+}
+
+.container {
+  max-width: var(--largura-conteudo);
+  margin-inline: auto;
+  padding-inline: var(--margem-lateral);
+}
+
+/* Cada seção da página. O scroll-margin-top impede que o título fique
+   escondido sob o cabeçalho fixo ao seguir uma âncora (#perfil etc.). */
+.secao {
+  padding-block: var(--espaco-5);
+  scroll-margin-top: var(--altura-cabecalho);
+}
+
+.secao + .secao {
+  border-top: var(--borda);
+}
+
+/* ==========================================================================
+   Utilitários e regras globais
+   ========================================================================== */
+
+/* Esconde da tela, mas mantém para leitores de tela (.sr-only do Bootstrap 4). */
+.visualmente-oculto {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Esconde o HTML ainda não compilado até o AngularJS terminar o bootstrap. */
+[ng-cloak] {
+  display: none !important;
+}
+
+/* Anel de foco único para todos os elementos focáveis pelo teclado. */
+:focus-visible {
+  outline: 0;
+  box-shadow: var(--anel-foco);
+}
+
+/* Única regra ligada às tags das diretivas: o navegador trata tags
+   desconhecidas como inline, e estas precisam ocupar a linha inteira.
+   No menu-suspenso, quem decide a largura é o div.menu-suspenso de dentro. */
+acordeao,
+paginacao,
+barra-progresso,
+abas,
+aba,
+menu-suspenso,
+toast-container {
+  display: block;
+}
+
+/* ==========================================================================
+   Ícones (SVG inline, cor herdada do texto)
+   ========================================================================== */
+
+.icone {
+  flex: none;
+  width: 1rem;
+  height: 1rem;
+}
+
+.icone--chevron-pequeno,
+.icone--check {
+  width: .75rem;
+  height: .75rem;
+}
+
+/* Glifo vazado em branco sobre o círculo cheio dos ícones do toast. */
+.icone__glifo {
+  stroke: var(--branco);
+}
+
+.icone__ponto {
+  fill: var(--branco);
+}
+
+/* ==========================================================================
+   Link de salto ("Ir para o conteúdo")
+   ========================================================================== */
+
+.salto {
+  position: absolute;
+  top: 0;
+  left: -10000px;
+}
+
+.salto:focus {
+  position: fixed;
+  top: var(--espaco-2);
+  left: var(--espaco-2);
+  z-index: var(--z-salto);
+  padding: var(--espaco-2) var(--espaco-3);
+  color: var(--cor-primaria);
+  background: var(--branco);
+  border: var(--borda);
+  border-radius: var(--raio);
+  outline: 0;
+  box-shadow: var(--anel-foco);
+}
+
+/* ==========================================================================
+   Botões
+   ========================================================================== */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espaco-2);
+  padding: var(--btn-padding);
+  font: inherit;
+  font-size: var(--fonte-base);
+  font-weight: var(--peso-normal);
+  line-height: var(--altura-linha);
+  color: var(--cor-texto);
+  white-space: nowrap;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--raio);
+  cursor: pointer;
+  transition:
+    color var(--transicao-controle),
+    background-color var(--transicao-controle),
+    border-color var(--transicao-controle),
+    box-shadow var(--transicao-controle);
+}
+
+.btn:focus-visible {
+  outline: 0;
+  box-shadow: var(--anel-foco);
+}
+
+.btn:disabled {
+  opacity: .65;
+  cursor: default;
+}
+
+.btn--primario {
+  color: var(--branco);
+  background: var(--cor-primaria);
+  border-color: var(--cor-primaria);
+}
+
+.btn--primario:hover:not(:disabled) {
+  background: var(--cor-primaria-hover);
+  border-color: var(--cor-primaria-borda-hover);
+}
+
+.btn--primario:active:not(:disabled) {
+  background: var(--cor-primaria-ativa);
+  border-color: var(--cor-primaria-borda-ativa);
+}
+
+.btn--secundario {
+  color: var(--cor-texto);
+  background: var(--cor-secundaria);
+  border-color: var(--cor-secundaria);
+}
+
+.btn--secundario:hover:not(:disabled) {
+  background: var(--cor-secundaria-hover);
+  border-color: var(--cor-secundaria-borda-hover);
+}
+
+.btn--secundario:active:not(:disabled) {
+  background: var(--cor-secundaria-ativa);
+  border-color: var(--cor-secundaria-borda-ativa);
+}
+
+/* Botão de contorno. O botão do filtro de semestre recebe as mesmas regras
+   pelo contexto (.filtros), como o menu da conta faz com o .btn--texto. */
+.btn--contorno,
+.filtros .menu-suspenso__botao {
+  color: var(--cor-contorno-secundario);
+  background: var(--branco);
+  border-color: var(--cor-contorno-secundario);
+}
+
+.btn--contorno:hover:not(:disabled),
+.btn--contorno:active:not(:disabled),
+.filtros .menu-suspenso__botao:hover,
+.filtros .menu-suspenso__botao:active,
+.filtros .menu-suspenso__botao[aria-expanded="true"] {
+  color: var(--branco);
+  background: var(--cor-contorno-secundario);
+}
+
+/* Botão de texto. O botão do menu da conta recebe as mesmas regras pelo
+   contexto (.cabecalho), sem precisar de um binding a mais na diretiva. */
+.btn--texto,
+.cabecalho .menu-suspenso__botao {
+  color: var(--cor-texto);
+  background: transparent;
+  border-color: transparent;
+}
+
+.btn--texto:hover,
+.cabecalho .menu-suspenso__botao:hover,
+.cabecalho .menu-suspenso__botao[aria-expanded="true"] {
+  background: var(--cor-fundo-secundario);
+}
+
+.btn--texto:active,
+.cabecalho .menu-suspenso__botao:active {
+  background: var(--cinza-200);
+}
+
+/* ==========================================================================
+   Cabeçalho (navbar)
+   ========================================================================== */
+
+/* sticky: o cabeçalho acompanha a rolagem sem precisar de padding no body. */
+.cabecalho {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-cabecalho);
+  background: var(--branco);
+  border-bottom: var(--borda);
+}
+
+/* Abaixo de 768 px: linha 1 com marca e conta; os links quebram para a linha 2. */
+.navbar__conteudo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.navbar__marca {
+  display: flex;
+  align-items: center;
+  min-height: var(--altura-navbar);
+  margin-right: var(--espaco-3);
+}
+
+.navbar__nome {
+  font-size: var(--fonte-h5);
+  font-weight: var(--peso-negrito);
+  line-height: var(--altura-linha-titulo);
+  color: var(--cor-texto);
+  white-space: nowrap;
+}
+
+/* O subtítulo e o separador só aparecem a partir de 992 px. */
+.navbar__subtitulo {
+  display: none;
+  align-items: center;
+  font-size: var(--fonte-base);
+  color: var(--cor-texto-secundario);
+  white-space: nowrap;
+}
+
+.navbar__subtitulo::before {
+  content: "";
+  width: 1px;
+  height: 1.125em;
+  margin-inline: var(--espaco-3);
+  background: var(--cor-borda);
+}
+
+/* Linha dos links abaixo de 768 px: ocupa a largura toda da tela (as margens
+   negativas anulam o recuo do .container) e rola na horizontal se faltar espaço. */
+.navbar__nav {
+  order: 3;
+  flex: 0 0 calc(100% + 2 * var(--margem-lateral));
+  margin-inline: calc(-1 * var(--margem-lateral));
+  padding-inline: var(--margem-lateral);
+  overflow-x: auto;
+  border-top: var(--borda);
+}
+
+.navbar__links {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.navbar__link {
+  display: flex;
+  align-items: center;
+  height: 44px;
+  padding-inline: .75rem;
+  color: var(--cor-texto);
+  white-space: nowrap;
+  border-bottom: var(--borda-indicador) solid transparent;
+  transition: background-color var(--transicao-controle), box-shadow var(--transicao-controle);
+}
+
+.navbar__link:hover,
+.navbar__link:focus-visible {
+  color: var(--cor-texto);
+  text-decoration: none;
+  background: var(--cor-fundo-secundario);
+}
+
+/* Anel interno: o anel externo seria cortado pela borda do cabeçalho. */
+.navbar__link:focus-visible {
+  border-radius: 0;
+  box-shadow: var(--anel-foco-interno);
+}
+
+.navbar__link:active {
+  background: var(--cinza-200);
+}
+
+.navbar__conta {
+  margin-left: auto;
+}
+
+/* A partir de 768 px: uma linha só, com os links entre a marca e a conta. */
+@media (min-width: 768px) {
+  .navbar__conteudo {
+    flex-wrap: nowrap;
+  }
+
+  .navbar__nav {
+    order: 0;
+    flex: none;
+    margin-inline: 0;
+    padding-inline: 0;
+    overflow-x: visible;
+    border-top: 0;
+  }
+
+  .navbar__link {
+    height: var(--altura-navbar);
+  }
+}
+
+@media (min-width: 992px) {
+  .navbar__subtitulo {
+    display: inline-flex;
+  }
+}
+
+/* ==========================================================================
+   Rodapé
+   ========================================================================== */
+
+.rodape {
+  padding-block: var(--espaco-4);
+  font-size: var(--fonte-pequena);
+  color: var(--cor-texto-suave);
+  background: var(--cor-fundo-secundario);
+  border-top: var(--borda);
+}
+
+.rodape__texto {
+  margin: 0;
+}
+
+/* ==========================================================================
+   Componente: menu suspenso
+   ========================================================================== */
+
+.menu-suspenso {
+  position: relative;
+  display: inline-block;
+}
+
+/* O chevron gira com o menu aberto, sem transição (como no Boost). */
+.menu-suspenso__botao[aria-expanded="true"] .icone--chevron-pequeno {
+  transform: rotate(180deg);
+}
+
+.menu-suspenso__lista {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: var(--z-menu);
+  min-width: 10rem;
+  width: max-content;
+  margin: .125rem 0 0;
+  padding: var(--espaco-2) 0;
+  list-style: none;
+  background: var(--branco);
+  border: 1px solid var(--cor-borda-menu);
+  border-radius: var(--raio);
+}
+
+/* Na navbar, a lista se alinha pela direita do botão. */
+.cabecalho .menu-suspenso__lista {
+  right: 0;
+  left: auto;
+}
+
+.menu-suspenso__item {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: var(--item-menu-padding);
+  font: inherit;
+  font-weight: var(--peso-normal);
+  color: var(--cor-texto);
+  text-align: left;
+  white-space: nowrap;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  transition: color var(--transicao-controle), background-color var(--transicao-controle);
+}
+
+.menu-suspenso__item:hover,
+.menu-suspenso__item:focus,
+.menu-suspenso__item:active {
+  color: var(--branco);
+  background: var(--cor-primaria);
+}
+
+/* O fundo azul já indica o item em foco; o anel global não é necessário aqui. */
+.menu-suspenso__item:focus-visible {
+  box-shadow: none;
+}
+
+.menu-suspenso__check {
+  position: absolute;
+  top: 50%;
+  left: .4rem;
+  transform: translateY(-50%);
+}
+
+/* ==========================================================================
+   Componente: toast
+   ========================================================================== */
+
+/* pointer-events: none deixa o contêiner vazio sem bloquear cliques na página. */
+.toasts {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  z-index: var(--z-toast);
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-2);
+  width: calc(100% - 2rem);
+  max-width: var(--toast-largura);
+  padding-top: var(--espaco-3);
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.toast {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--espaco-2);
+  padding: .75rem;
+  font-size: var(--fonte-toast);
+  border: 1px solid var(--toast-borda);
+  border-radius: var(--raio-toast);
+  box-shadow: var(--sombra-toast);
+  pointer-events: auto;
+  animation: toast-entrada var(--transicao-toast);
+  transition: opacity var(--transicao-toast);
+}
+
+@keyframes toast-entrada {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+/* Aplicada pelo ToastService 150 ms antes de remover o toast da fila. */
+.toast--saindo {
+  opacity: 0;
+}
+
+.toast--sucesso {
+  color: var(--toast-sucesso-texto);
+  background: var(--toast-sucesso-fundo);
+}
+
+.toast--erro {
+  color: var(--toast-erro-texto);
+  background: var(--toast-erro-fundo);
+}
+
+.toast--info {
+  color: var(--toast-info-texto);
+  background: var(--toast-info-fundo);
+}
+
+.toast__icone {
+  margin-top: .1rem;
+}
+
+.toast__mensagem {
+  flex: 1;
+  margin: 0;
+}
+
+.toast__fechar {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  color: inherit;
+  background: transparent;
+  border: 0;
+  border-radius: var(--raio-pequeno);
+  opacity: .75;
+  cursor: pointer;
+}
+
+.toast__fechar:hover,
+.toast__fechar:focus-visible,
+.toast__fechar:active {
+  opacity: 1;
+}
+
+/* ==========================================================================
+   Campos de formulário
+   ========================================================================== */
+
+.rotulo {
+  display: block;
+  margin-bottom: var(--espaco-1);
+  font-weight: var(--peso-normal);
+  color: var(--cor-texto);
+}
+
+.campo {
+  display: block;
+  width: 100%;
+  padding: var(--campo-padding);
+  font: inherit;
+  font-size: var(--fonte-base);
+  line-height: var(--altura-linha);
+  color: var(--cor-texto-secundario);
+  background: var(--branco);
+  border: 1px solid var(--cor-borda-campo);
+  border-radius: var(--raio);
+  transition: border-color var(--transicao-controle), box-shadow var(--transicao-controle);
+}
+
+/* O navegador aplica um visual próprio ao type="search" (reboot do Bootstrap 4). */
+.campo[type="search"] {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.campo:focus {
+  outline: 0;
+  box-shadow: var(--anel-foco);
+}
+
+/* Inválido depois de "Salvar alterações" (.is-invalid do Bootstrap 4). */
+.campo--invalido {
+  border-color: var(--cor-perigo);
+}
+
+.rotulo__obrigatorio {
+  color: var(--cor-texto-suave);
+}
+
+.grupo-campo {
+  margin-bottom: var(--espaco-3);
+}
+
+/* Mensagem abaixo do campo inválido (.invalid-feedback). */
+.mensagem-erro {
+  margin: var(--espaco-1) 0 0;
+  font-size: var(--fonte-pequena);
+  color: var(--cor-perigo);
+}
+
+/* Texto de apoio abaixo do campo (.form-text). */
+.texto-apoio {
+  margin: var(--espaco-1) 0 var(--espaco-3);
+  font-size: var(--fonte-pequena);
+  color: var(--cor-texto-suave);
+}
+
+/* Campo de arquivo nativo; o botão interno recebe o visual do .btn--secundario. */
+/* width: 100%: com a largura padrão, o Chrome corta o nome do arquivo no meio. */
+.campo-arquivo {
+  display: block;
+  width: 100%;
+  font: inherit;
+  font-size: var(--fonte-base);
+  color: var(--cor-texto);
+}
+
+.campo-arquivo:focus-visible {
+  border-radius: var(--raio);
+}
+
+.campo-arquivo::file-selector-button {
+  margin-right: var(--espaco-2);
+  padding: var(--btn-padding);
+  font: inherit;
+  line-height: var(--altura-linha);
+  color: var(--cor-texto);
+  background: var(--cor-secundaria);
+  border: 1px solid var(--cor-secundaria);
+  border-radius: var(--raio);
+  cursor: pointer;
+  transition: background-color var(--transicao-controle), border-color var(--transicao-controle);
+}
+
+.campo-arquivo:hover:not(:disabled)::file-selector-button {
+  background: var(--cor-secundaria-hover);
+  border-color: var(--cor-secundaria-borda-hover);
+}
+
+.campo-arquivo:disabled::file-selector-button {
+  opacity: .65;
+  cursor: default;
+}
+
+/* Abaixo de 16 px, o Safari do iOS dá zoom na página ao focar o campo. */
+@media (max-width: 767.98px) {
+  .campo {
+    font-size: 1rem;
+  }
+}
+
+/* ==========================================================================
+   Disciplinas: barra de filtros, resumo e mensagem vazia
+   ========================================================================== */
+
+/* Abaixo de 768 px: busca e filtro empilhados, em largura total. */
+.filtros {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-3);
+  margin-bottom: var(--espaco-4);
+}
+
+.filtros .menu-suspenso {
+  display: block;
+}
+
+.filtros .menu-suspenso__botao {
+  justify-content: space-between;
+  width: 100%;
+}
+
+.filtros .menu-suspenso__lista {
+  min-width: 100%;
+}
+
+/* A partir de 768 px: lado a lado, alinhados pela base do campo. */
+@media (min-width: 768px) {
+  .filtros {
+    flex-direction: row;
+    align-items: flex-end;
+  }
+
+  .filtros__busca {
+    flex: 1;
+    max-width: 24rem;
+  }
+
+  .filtros .menu-suspenso {
+    display: inline-block;
+  }
+
+  .filtros .menu-suspenso__botao {
+    width: auto;
+  }
+
+  .filtros .menu-suspenso__lista {
+    min-width: 10rem;
+  }
+}
+
+.catalogo__resumo {
+  margin-bottom: var(--espaco-3);
+  color: var(--cor-texto);
+}
+
+.catalogo__vazio {
+  margin: 0;
+  padding-block: var(--espaco-4);
+  color: var(--cor-texto-suave);
+}
+
+/* ==========================================================================
+   Tabelas (.table do Bootstrap 4)
+   ========================================================================== */
+
+.tabela {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tabela th,
+.tabela td {
+  padding: var(--tabela-padding);
+  text-align: left;
+  vertical-align: top;
+  border-top: var(--borda);
+}
+
+.tabela thead th {
+  font-weight: var(--peso-negrito);
+  vertical-align: bottom;
+  border-bottom: 2px solid var(--cor-borda);
+}
+
+/* Colunas numéricas: à direita e com algarismos de largura igual. */
+.tabela .tabela__numero {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.tabela .btn {
+  white-space: nowrap;
+}
+
+/* Legenda das tabelas do Histórico, acima e à esquerda. */
+.tabela caption {
+  caption-side: top;
+  padding: 0 0 var(--espaco-2);
+  font-weight: var(--peso-negrito);
+  color: var(--cor-texto);
+  text-align: left;
+}
+
+.tabela-rolagem {
+  margin-bottom: var(--espaco-4);
+}
+
+.tabela-rolagem:focus-visible {
+  border-radius: var(--raio-pequeno);
+}
+
+/* Só a palavra muda de cor; não há selo nem fundo colorido. */
+.situacao--reprovado {
+  color: var(--cor-perigo);
+}
+
+@media (max-width: 767.98px) {
+  .tabela th,
+  .tabela td {
+    padding: .5rem;
+  }
+
+  /* Histórico: cada linha numa linha só, com rolagem horizontal dentro do
+     invólucro (role="region", focável), e não na página. */
+  .tabela-rolagem {
+    overflow-x: auto;
+  }
+
+  .tabela-rolagem .tabela {
+    white-space: nowrap;
+  }
+}
+
+/* Catálogo abaixo de 992 px: cada linha vira um bloco "rótulo valor".
+   O modificador --catalogo impede que estas regras atinjam outras tabelas. */
+@media (max-width: 991.98px) {
+  .tabela--catalogo {
+    display: block;
+  }
+
+  /* Cabeçalho escondido só da tela (como .visualmente-oculto), não do leitor. */
+  .tabela--catalogo thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .tabela--catalogo tbody {
+    display: grid;
+    gap: var(--espaco-3);
+  }
+
+  .tabela--catalogo tr {
+    display: block;
+    min-width: 0;
+    padding: .75rem var(--espaco-3);
+    border: var(--borda-cartao);
+    border-radius: var(--raio);
+  }
+
+  .tabela--catalogo td {
+    display: grid;
+    grid-template-columns: 8rem 1fr;
+    gap: var(--espaco-2);
+    padding: var(--espaco-1) 0;
+    border: 0;
+  }
+
+  /* O rótulo vem do atributo data-rotulo de cada célula. */
+  .tabela--catalogo td::before {
+    content: attr(data-rotulo);
+    color: var(--cor-texto-suave);
+  }
+
+  .tabela--catalogo .tabela__numero {
+    text-align: left;
+  }
+
+  .tabela--catalogo .tabela__codigo,
+  .tabela--catalogo .tabela__nome,
+  .tabela--catalogo .tabela__acao {
+    display: block;
+  }
+
+  .tabela--catalogo .tabela__codigo {
+    padding: 0;
+    font-size: var(--fonte-pequena);
+    color: var(--cor-texto-suave);
+  }
+
+  .tabela--catalogo .tabela__nome {
+    padding-top: 0;
+    font-weight: var(--peso-negrito);
+  }
+
+  .tabela--catalogo .tabela__acao .btn {
+    justify-content: center;
+    width: 100%;
+    margin-top: var(--espaco-2);
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+  .tabela--catalogo tbody {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Na tabela do catálogo toda linha tem um botão, mais alto que uma linha de
+   texto; centralizar na vertical deixa o texto na altura do rótulo do botão. */
+@media (min-width: 992px) {
+  .tabela--catalogo tbody td {
+    vertical-align: middle;
+  }
+}
+
+/* ==========================================================================
+   Componente: paginação (.pagination / .page-link)
+   ========================================================================== */
+
+.paginacao__lista {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: var(--espaco-4) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.paginacao__botao {
+  position: relative;
+  display: block;
+  margin-left: -1px;
+  padding: var(--pagina-padding);
+  font: inherit;
+  font-size: var(--fonte-base);
+  line-height: var(--altura-linha-paginacao);
+  color: var(--cor-primaria);
+  background: var(--branco);
+  border: var(--borda);
+  cursor: pointer;
+  transition:
+    color var(--transicao-controle),
+    background-color var(--transicao-controle),
+    border-color var(--transicao-controle),
+    box-shadow var(--transicao-controle);
+}
+
+/* Raio só nas pontas externas do grupo. */
+.paginacao__item:first-child .paginacao__botao {
+  margin-left: 0;
+  border-top-left-radius: var(--raio);
+  border-bottom-left-radius: var(--raio);
+}
+
+.paginacao__item:last-child .paginacao__botao {
+  border-top-right-radius: var(--raio);
+  border-bottom-right-radius: var(--raio);
+}
+
+.paginacao__botao:hover:not(:disabled),
+.paginacao__botao:active:not(:disabled) {
+  z-index: 2;
+  color: var(--cor-link-hover);
+  background: var(--cor-pagina-hover);
+}
+
+/* z-index 3: o anel de foco fica por cima dos botões vizinhos. */
+.paginacao__botao:focus-visible {
+  z-index: 3;
+  outline: 0;
+  box-shadow: var(--anel-foco);
+}
+
+.paginacao__botao--atual,
+.paginacao__botao--atual:hover:not(:disabled),
+.paginacao__botao--atual:active:not(:disabled) {
+  z-index: 3;
+  color: var(--branco);
+  background: var(--cor-primaria);
+  border-color: var(--cor-primaria);
+}
+
+.paginacao__botao:disabled {
+  color: var(--cor-texto-suave);
+  background: var(--branco);
+  cursor: default;
+}
+
+/* ==========================================================================
+   Componente: acordeão
+   ========================================================================== */
+
+.acordeao {
+  background: var(--branco);
+  border: var(--borda-cartao);
+  border-radius: var(--raio);
+}
+
+.acordeao__item + .acordeao__item {
+  border-top: var(--borda);
+}
+
+.acordeao__titulo {
+  margin: 0;
+  font-size: inherit;
+}
+
+.acordeao__botao {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--espaco-2);
+  width: 100%;
+  padding: .75rem var(--cartao-padding);
+  font: inherit;
+  font-weight: var(--peso-negrito);
+  line-height: var(--altura-linha);
+  color: var(--cor-texto);
+  text-align: left;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  transition: background-color var(--transicao-controle), box-shadow var(--transicao-controle);
+}
+
+/* O primeiro e o último botão acompanham o raio do contêiner (descontada a
+   borda de 1 px), para o fundo do hover não passar das pontas. */
+.acordeao__item:first-child .acordeao__botao {
+  border-top-left-radius: calc(var(--raio) - 1px);
+  border-top-right-radius: calc(var(--raio) - 1px);
+}
+
+.acordeao__item:last-child .acordeao__botao {
+  border-bottom-left-radius: calc(var(--raio) - 1px);
+  border-bottom-right-radius: calc(var(--raio) - 1px);
+}
+
+.acordeao__botao:hover {
+  background: var(--cor-fundo-secundario);
+}
+
+.acordeao__botao:active {
+  background: var(--cinza-200);
+}
+
+/* Anel interno: o externo seria coberto pelos itens vizinhos. */
+.acordeao__botao:focus-visible {
+  outline: 0;
+  box-shadow: var(--anel-foco-interno);
+}
+
+/* Fechado, o chevron aponta para a direita; aberto, para baixo. */
+.icone--chevron {
+  margin-top: .2rem;
+  transform: rotate(-90deg);
+  transition: transform var(--transicao-colapso);
+}
+
+.acordeao__botao[aria-expanded="true"] .icone--chevron {
+  transform: rotate(0);
+}
+
+/* Transição de altura sem JavaScript: a linha do grid vai de 0fr a 1fr.
+   Fechado, o visibility: hidden também tira o conteúdo da ordem de Tab
+   e do leitor de tela. */
+.acordeao__painel {
+  display: grid;
+  grid-template-rows: 0fr;
+  visibility: hidden;
+  transition:
+    grid-template-rows var(--transicao-colapso),
+    visibility var(--transicao-colapso);
+}
+
+.acordeao__painel--aberto {
+  grid-template-rows: 1fr;
+  visibility: visible;
+}
+
+.acordeao__conteudo {
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* O recuo fica no parágrafo: com padding no .acordeao__conteudo, a linha
+   de 0fr não chegaria a altura zero. */
+.acordeao__conteudo p {
+  margin: 0;
+  padding: 0 var(--cartao-padding) var(--espaco-3) calc(var(--cartao-padding) + 16px + var(--espaco-2));
+}
+
+@media (min-width: 768px) {
+  .acordeao {
+    max-width: var(--largura-texto);
+  }
+}
+
+.ajuda__horario {
+  margin: var(--espaco-3) 0 0;
+  color: var(--cor-texto-suave);
+}
+
+/* ==========================================================================
+   Painel: identificação, cartões e grade
+   ========================================================================== */
+
+.identificacao {
+  margin-bottom: var(--espaco-4);
+}
+
+.identificacao__saudacao {
+  margin: 0;
+  font-weight: var(--peso-negrito);
+}
+
+.identificacao__curso {
+  margin: 0;
+  color: var(--cor-texto-suave);
+}
+
+/* 1 coluna; 2 a partir de 768 px; 3 a partir de 992 px (Prazos ocupa duas
+   linhas na coluna 3 e Contato ocupa as colunas 1 e 2 da segunda linha). */
+.painel-grid {
+  display: grid;
+  gap: var(--espaco-3);
+}
+
+@media (min-width: 768px) {
+  .painel-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 992px) {
+  .painel-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--espaco-4);
+  }
+
+  .painel-grid .cartao--prazos {
+    grid-column: 3;
+    grid-row: 1 / span 2;
+  }
+
+  .painel-grid .cartao--contato {
+    grid-column: 1 / span 2;
+  }
+}
+
+/* Cartão do Boost (.card): borda fina, raio de 8 px, sem sombra e sem hover. */
+.cartao {
+  min-width: 0;
+  padding: var(--cartao-padding);
+  background: var(--branco);
+  border: var(--borda-cartao);
+  border-radius: var(--raio);
+}
+
+.cartao__nota {
+  margin: var(--espaco-2) 0 0;
+  font-size: var(--fonte-pequena);
+  color: var(--cor-texto-suave);
+}
+
+.cartao__rotulo {
+  margin: 0;
+  font-size: var(--fonte-pequena);
+  color: var(--cor-texto-suave);
+}
+
+/* Maior número da página: o tamanho do h4, nunca maior. */
+.cartao__valor {
+  margin: 0;
+  font-size: var(--fonte-h4);
+  font-weight: var(--peso-negrito);
+  line-height: var(--altura-linha-titulo);
+  font-variant-numeric: tabular-nums;
+}
+
+.cartao__detalhe {
+  margin: var(--espaco-1) 0 0;
+  font-size: var(--fonte-pequena);
+}
+
+.cartao__linha {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.cartao__link {
+  margin: var(--espaco-2) 0 0;
+}
+
+.prazos {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.prazos__item {
+  padding-block: var(--espaco-2);
+}
+
+.prazos__item:first-child {
+  padding-top: 0;
+}
+
+.prazos__item:last-child {
+  padding-bottom: 0;
+}
+
+.prazos__item + .prazos__item {
+  border-top: var(--borda);
+}
+
+.prazos__data {
+  display: block;
+  font-weight: var(--peso-negrito);
+  font-variant-numeric: tabular-nums;
+}
+
+.prazos__descricao {
+  display: block;
+}
+
+/* ==========================================================================
+   Componente: barra de progresso (.progress / .progress-bar)
+   ========================================================================== */
+
+.progresso {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-2);
+}
+
+/* O overflow: hidden recorta a ponta da barra no raio do trilho. */
+.progresso__trilho {
+  flex: 1;
+  height: 1rem;
+  overflow: hidden;
+  background: var(--cor-trilho);
+  border-radius: var(--raio);
+}
+
+.progresso__barra {
+  height: 100%;
+  background: var(--cor-primaria);
+  transition: width var(--transicao-progresso);
+}
+
+/* min-width: o texto não empurra a barra quando passa de 9% para 10%. */
+.progresso__percentual {
+  min-width: 4ch;
+  font-weight: var(--peso-negrito);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+/* ==========================================================================
+   Componente: abas (variante plana do Moodle 4)
+   ========================================================================== */
+
+/* A linha cinza fica num ::after, por baixo das abas; o indicador de 3 px da
+   aba selecionada cobre a linha. Assim a lista pode rolar na horizontal
+   (overflow-x: auto) sem cortar o indicador. */
+.abas__lista {
+  position: relative;
+  display: flex;
+  margin-bottom: var(--espaco-4);
+  overflow-x: auto;
+}
+
+.abas__lista::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border-bottom: var(--borda);
+}
+
+.abas__aba {
+  position: relative;
+  z-index: 1;
+  flex: none;
+  padding: var(--aba-padding);
+  font: inherit;
+  font-weight: var(--peso-normal);
+  line-height: var(--altura-linha);
+  color: var(--cor-texto);
+  white-space: nowrap;
+  background: transparent;
+  background-clip: padding-box;
+  border: 0;
+  border-bottom: var(--borda-indicador) solid transparent;
+  cursor: pointer;
+  transition: background-color var(--transicao-controle), box-shadow var(--transicao-controle);
+}
+
+.abas__aba:hover {
+  background-color: var(--cor-fundo-secundario);
+}
+
+.abas__aba:active {
+  background-color: var(--cinza-200);
+}
+
+/* Anel interno: o externo seria cortado pela rolagem da lista. */
+.abas__aba:focus-visible {
+  outline: 0;
+  box-shadow: var(--anel-foco-interno);
+}
+
+/* Selecionada: fundo claro e indicador azul; o peso não muda. */
+.abas__aba[aria-selected="true"] {
+  background-color: var(--cor-fundo-secundario);
+  border-bottom-color: var(--cor-primaria);
+}
+
+.abas__painel:focus-visible {
+  border-radius: var(--raio-pequeno);
+}
+
+@media (max-width: 575.98px) {
+  .abas__aba {
+    padding: .5rem .75rem;
+  }
+}
+
+/* ==========================================================================
+   Perfil: dados pessoais
+   ========================================================================== */
+
+/* Campos somente leitura em grade: rótulo pequeno acima do valor. */
+.dados {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr));
+  column-gap: var(--espaco-3);
+  margin: 0 0 var(--espaco-3);
+}
+
+.dados__item {
+  min-width: 0;
+}
+
+.dados dt {
+  font-size: var(--fonte-pequena);
+  color: var(--cor-texto-suave);
+}
+
+.dados dd {
+  margin: 0 0 var(--espaco-3);
+  color: var(--cor-texto);
+  overflow-wrap: anywhere;
+}
+
+/* fieldset sem moldura (reboot do Bootstrap 4); a legenda tem o estilo do h3. */
+.formulario__grupo {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.formulario__legenda {
+  margin-bottom: var(--espaco-2);
+  padding: 0;
+  font-size: var(--fonte-h5);
+  font-weight: var(--peso-negrito);
+  line-height: var(--altura-linha-titulo);
+}
+
+.formulario__campos {
+  display: grid;
+  column-gap: var(--espaco-3);
+}
+
+.formulario__acoes {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--espaco-2);
+  margin-top: var(--espaco-2);
+}
+
+.formulario__aviso {
+  margin: 0;
+  font-size: var(--fonte-pequena);
+  color: var(--cor-texto-secundario);
+}
+
+@media (min-width: 768px) {
+  .formulario__campos {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .grupo-campo--largo {
+    grid-column: 1 / -1;
+  }
+
+  .formulario__acoes {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .formulario__aviso {
+    margin-left: var(--espaco-2);
+  }
+}
+
+@media (min-width: 992px) {
+  .dados,
+  .formulario {
+    max-width: var(--largura-texto);
+  }
+}
+
+/* ==========================================================================
+   Perfil: histórico e documentos
+   ========================================================================== */
+
+.historico__coeficiente {
+  margin-bottom: var(--espaco-4);
+}
+
+/* Blocos empilhados; a partir de 992 px, dois lado a lado e as
+   solicitações recentes em largura total abaixo. */
+.documentos {
+  display: grid;
+  gap: var(--espaco-5);
+}
+
+.documentos__bloco {
+  min-width: 0;
+}
+
+@media (min-width: 992px) {
+  .documentos {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .documentos__bloco--largo {
+    grid-column: 1 / -1;
+  }
+}
+
+.documentos__lista {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.documentos__item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--espaco-2);
+  padding-block: .75rem;
+  border-top: var(--borda);
+}
+
+@media (min-width: 576px) {
+  .documentos__item {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--espaco-3);
+  }
+}
+
+.documentos__nome,
+.documentos__prazo {
+  display: block;
+}
+
+.documentos__prazo {
+  font-size: var(--fonte-pequena);
+  color: var(--cor-texto-suave);
+}
+
+.envio__progresso {
+  max-width: 24rem;
+  margin-top: var(--espaco-3);
+}
+
+.envio__concluido {
+  margin: var(--espaco-1) 0 0;
+  font-size: var(--fonte-pequena);
+}
+
+/* ==========================================================================
+   Movimento reduzido: desliga todas as transições e animações
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+}
