@@ -44,9 +44,49 @@
   <main id="conteudo" tabindex="-1">
     <h1 class="visualmente-oculto">Portal do Aluno — Faculdade Itapuã</h1>
 
-    <section id="painel" class="secao" aria-labelledby="titulo-painel">
+    <section id="painel" class="secao" aria-labelledby="titulo-painel"
+             ng-controller="PainelController as painel">
       <div class="container">
         <h2 id="titulo-painel" tabindex="-1">Painel</h2>
+
+        <div class="identificacao">
+          <p class="identificacao__saudacao">Olá, {{ painel.aluno.nomeCurto }}.</p>
+          <p class="identificacao__curso">Engenharia de Software · {{ painel.aluno.semestreAtual }} · Matrícula {{ painel.aluno.matricula }}</p>
+        </div>
+
+        <div class="painel-grid">
+          <div class="cartao">
+            <h3 class="cartao__titulo">Progresso do curso</h3>
+            <barra-progresso valor="painel.percentual" rotulo="Progresso do curso" mostrar-percentual="true"></barra-progresso>
+            <!-- Filtro próprio cargaHoraria: 2190 -> "2.190 h". -->
+            <p class="cartao__nota">{{ painel.aluno.cargaHorariaCumprida | cargaHoraria }} de {{ painel.aluno.cargaHorariaTotal | cargaHoraria }}</p>
+          </div>
+
+          <div class="cartao">
+            <h3 class="cartao__titulo">Financeiro</h3>
+            <p class="cartao__rotulo">Mensalidade {{ painel.aluno.periodoAtual }}</p>
+            <p class="cartao__valor">{{ painel.mensalidade.valor | moeda }}</p>
+            <p class="cartao__detalhe">Vencimento: {{ painel.mensalidade.vencimento | date:'dd/MM/yyyy' }}</p>
+          </div>
+
+          <div class="cartao cartao--prazos">
+            <h3 class="cartao__titulo">Prazos acadêmicos</h3>
+            <ul class="prazos">
+              <!-- orderBy: o serviço entrega os prazos fora de ordem; a tela ordena pela data. -->
+              <li class="prazos__item" ng-repeat="prazo in painel.prazos | orderBy:'data'">
+                <time class="prazos__data" datetime="{{ prazo.data }}">{{ prazo.data | date:'dd/MM/yyyy' }}</time>
+                <span class="prazos__descricao">{{ prazo.descricao }}</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="cartao cartao--contato">
+            <h3 class="cartao__titulo">Contato</h3>
+            <p class="cartao__linha">{{ painel.aluno.contato.emailPessoal }}</p>
+            <p class="cartao__linha">{{ painel.aluno.contato.telefone }}</p>
+            <p class="cartao__link"><a href="#perfil">Editar no perfil</a></p>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -126,9 +166,217 @@
       </div>
     </section>
 
-    <section id="perfil" class="secao" aria-labelledby="titulo-perfil">
+    <section id="perfil" class="secao" aria-labelledby="titulo-perfil"
+             ng-controller="PerfilController as perfil">
       <div class="container">
         <h2 id="titulo-perfil" tabindex="-1">Perfil do aluno</h2>
+
+        <!-- O conteúdo de cada <aba> é transcluído: continua no escopo desta
+             seção, por isso perfil.rascunho e perfil.formDados funcionam lá dentro. -->
+        <abas rotulo="Perfil do aluno">
+          <aba titulo="Dados pessoais">
+            <h3>Identificação</h3>
+            <dl class="dados">
+              <div class="dados__item">
+                <dt>Nome</dt>
+                <dd>{{ perfil.aluno.nome }}</dd>
+              </div>
+              <div class="dados__item">
+                <dt>Matrícula</dt>
+                <dd>{{ perfil.aluno.matricula }}</dd>
+              </div>
+              <div class="dados__item">
+                <dt>Curso</dt>
+                <dd>{{ perfil.aluno.curso }}</dd>
+              </div>
+              <div class="dados__item">
+                <dt>Data de nascimento</dt>
+                <dd>{{ perfil.aluno.dataNascimento | date:'dd/MM/yyyy' }}</dd>
+              </div>
+              <div class="dados__item">
+                <dt>E-mail institucional</dt>
+                <dd>{{ perfil.aluno.emailInstitucional }}</dd>
+              </div>
+            </dl>
+
+            <!-- novalidate: desliga os balões do navegador; a validação é a do
+                 AngularJS ($invalid, $submitted) e as mensagens são as da página. -->
+            <form class="formulario" name="perfil.formDados" novalidate ng-submit="perfil.salvar()">
+              <fieldset class="formulario__grupo">
+                <legend class="formulario__legenda">Contato e endereço</legend>
+                <div class="formulario__campos">
+                  <div class="grupo-campo">
+                    <label class="rotulo" for="campo-email">E-mail pessoal <span class="rotulo__obrigatorio">(obrigatório)</span></label>
+                    <input type="email" id="campo-email" name="emailPessoal" class="campo" required
+                           ng-model="perfil.rascunho.emailPessoal" ng-change="perfil.marcarAlteracao()"
+                           ng-class="{ 'campo--invalido': perfil.campoInvalido('emailPessoal') }"
+                           ng-attr-aria-invalid="{{ perfil.campoInvalido('emailPessoal') ? 'true' : undefined }}"
+                           ng-attr-aria-describedby="{{ perfil.campoInvalido('emailPessoal') ? 'erro-email' : undefined }}">
+                    <p class="mensagem-erro" id="erro-email" ng-show="perfil.campoInvalido('emailPessoal')">Informe um e-mail válido.</p>
+                  </div>
+                  <div class="grupo-campo">
+                    <label class="rotulo" for="campo-telefone">Telefone celular <span class="rotulo__obrigatorio">(obrigatório)</span></label>
+                    <input type="tel" id="campo-telefone" name="telefone" class="campo" required
+                           ng-model="perfil.rascunho.telefone" ng-change="perfil.marcarAlteracao()"
+                           ng-class="{ 'campo--invalido': perfil.campoInvalido('telefone') }"
+                           ng-attr-aria-invalid="{{ perfil.campoInvalido('telefone') ? 'true' : undefined }}"
+                           ng-attr-aria-describedby="{{ perfil.campoInvalido('telefone') ? 'erro-telefone' : undefined }}">
+                    <p class="mensagem-erro" id="erro-telefone" ng-show="perfil.campoInvalido('telefone')">Informe o telefone.</p>
+                  </div>
+                  <div class="grupo-campo">
+                    <label class="rotulo" for="campo-cep">CEP</label>
+                    <input type="text" id="campo-cep" name="cep" class="campo"
+                           ng-model="perfil.rascunho.cep" ng-change="perfil.marcarAlteracao()"
+                           ng-pattern="/^\d{5}-\d{3}$/"
+                           ng-class="{ 'campo--invalido': perfil.campoInvalido('cep') }"
+                           ng-attr-aria-invalid="{{ perfil.campoInvalido('cep') ? 'true' : undefined }}"
+                           ng-attr-aria-describedby="{{ perfil.campoInvalido('cep') ? 'erro-cep' : undefined }}">
+                    <p class="mensagem-erro" id="erro-cep" ng-show="perfil.campoInvalido('cep')">Use o formato 00000-000.</p>
+                  </div>
+                  <div class="grupo-campo grupo-campo--largo">
+                    <label class="rotulo" for="campo-endereco">Endereço</label>
+                    <input type="text" id="campo-endereco" name="endereco" class="campo"
+                           ng-model="perfil.rascunho.endereco" ng-change="perfil.marcarAlteracao()">
+                  </div>
+                  <div class="grupo-campo">
+                    <label class="rotulo" for="campo-bairro">Bairro</label>
+                    <input type="text" id="campo-bairro" name="bairro" class="campo"
+                           ng-model="perfil.rascunho.bairro" ng-change="perfil.marcarAlteracao()">
+                  </div>
+                  <div class="grupo-campo">
+                    <label class="rotulo" for="campo-cidade">Cidade/UF</label>
+                    <input type="text" id="campo-cidade" name="cidadeUf" class="campo"
+                           ng-model="perfil.rascunho.cidadeUf" ng-change="perfil.marcarAlteracao()">
+                  </div>
+                </div>
+              </fieldset>
+
+              <div class="formulario__acoes">
+                <button type="submit" class="btn btn--primario">Salvar alterações</button>
+                <button type="button" class="btn btn--secundario" ng-click="perfil.descartar()">Descartar alterações</button>
+                <p class="formulario__aviso" role="status" ng-show="perfil.alterado">Alterações não salvas.</p>
+              </div>
+            </form>
+          </aba>
+
+          <aba titulo="Histórico">
+            <p class="historico__coeficiente">Coeficiente de rendimento: {{ perfil.aluno.coeficienteRendimento | nota }}</p>
+
+            <!-- filter:{ periodo: '...' }:true separa as linhas de cada período
+                 (true = comparação exata). -->
+            <div class="tabela-rolagem" role="region" tabindex="0" aria-label="2026.2 — em curso">
+              <table class="tabela">
+                <caption>2026.2 — em curso</caption>
+                <thead>
+                  <tr>
+                    <th scope="col">Código</th>
+                    <th scope="col">Disciplina</th>
+                    <th scope="col" class="tabela__numero">Carga horária</th>
+                    <th scope="col" class="tabela__numero">Nota</th>
+                    <th scope="col" class="tabela__numero">Frequência</th>
+                    <th scope="col">Situação</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="d in perfil.historico | filter:{ periodo: '2026.2' }:true">
+                    <td>{{ d.codigo | uppercase }}</td>
+                    <td>{{ d.nome }}</td>
+                    <td class="tabela__numero">{{ d.cargaHoraria | cargaHoraria }}</td>
+                    <td class="tabela__numero">{{ d.nota | nota }}</td>
+                    <td class="tabela__numero">{{ d.frequencia }}%</td>
+                    <td ng-class="{ 'situacao--reprovado': d.situacao === 'Reprovado' }">{{ d.situacao }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="tabela-rolagem" role="region" tabindex="0" aria-label="2026.1">
+              <table class="tabela">
+                <caption>2026.1</caption>
+                <thead>
+                  <tr>
+                    <th scope="col">Código</th>
+                    <th scope="col">Disciplina</th>
+                    <th scope="col" class="tabela__numero">Carga horária</th>
+                    <th scope="col" class="tabela__numero">Nota</th>
+                    <th scope="col" class="tabela__numero">Frequência</th>
+                    <th scope="col">Situação</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="d in perfil.historico | filter:{ periodo: '2026.1' }:true">
+                    <td>{{ d.codigo | uppercase }}</td>
+                    <td>{{ d.nome }}</td>
+                    <td class="tabela__numero">{{ d.cargaHoraria | cargaHoraria }}</td>
+                    <td class="tabela__numero">{{ d.nota | nota }}</td>
+                    <td class="tabela__numero">{{ d.frequencia }}%</td>
+                    <td ng-class="{ 'situacao--reprovado': d.situacao === 'Reprovado' }">{{ d.situacao }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </aba>
+
+          <aba titulo="Documentos">
+            <div class="documentos">
+              <div class="documentos__bloco">
+                <h3>Documentos disponíveis</h3>
+                <ul class="documentos__lista">
+                  <li class="documentos__item" ng-repeat="doc in perfil.documentos">
+                    <div>
+                      <span class="documentos__nome">{{ doc.nome }}</span>
+                      <!-- lowercase: "Até 2 dias úteis" vira "até 2 dias úteis" depois dos dois-pontos. -->
+                      <span class="documentos__prazo">Prazo: {{ doc.prazo | lowercase }}</span>
+                    </div>
+                    <button type="button" class="btn btn--secundario" aria-label="Solicitar {{ doc.nome }}"
+                            ng-click="perfil.solicitarDocumento(doc)">Solicitar</button>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="documentos__bloco">
+                <h3>Enviar atestado médico</h3>
+                <label class="rotulo" for="campo-atestado">Arquivo (PDF, JPG ou PNG, até 5 MB)</label>
+                <!-- ng-model não funciona em campo de arquivo: a diretiva seletor-arquivo
+                     entrega o arquivo escolhido pelo callback on-selecionar. -->
+                <input type="file" id="campo-atestado" class="campo-arquivo" accept=".pdf,.jpg,.jpeg,.png"
+                       aria-describedby="apoio-atestado"
+                       seletor-arquivo
+                       arquivo="perfil.envio.arquivo"
+                       on-selecionar="perfil.escolherArquivo(arquivo)"
+                       ng-disabled="perfil.envio.enviando">
+                <p class="texto-apoio" id="apoio-atestado">Envie em até 3 dias úteis após o início do afastamento.</p>
+                <button type="button" class="btn btn--primario"
+                        ng-disabled="!perfil.envio.arquivo || perfil.envio.enviando"
+                        ng-click="perfil.enviarArquivo()">{{ perfil.envio.enviando ? 'Enviando…' : 'Enviar arquivo' }}</button>
+                <div class="envio__progresso" ng-show="perfil.envio.enviando || perfil.envio.concluido">
+                  <barra-progresso valor="perfil.envio.progresso" rotulo="Envio do atestado" mostrar-percentual="true"></barra-progresso>
+                  <p class="envio__concluido" ng-show="perfil.envio.concluido">Envio concluído.</p>
+                </div>
+              </div>
+
+              <div class="documentos__bloco documentos__bloco--largo">
+                <h3 id="titulo-solicitacoes">Solicitações recentes</h3>
+                <table class="tabela" aria-labelledby="titulo-solicitacoes">
+                  <thead>
+                    <tr>
+                      <th scope="col">Documento</th>
+                      <th scope="col">Data</th>
+                      <th scope="col">Situação</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-repeat="s in perfil.solicitacoes">
+                      <td>{{ s.documento }}</td>
+                      <td>{{ s.data | date:'dd/MM/yyyy' }}</td>
+                      <td>{{ s.situacao }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </aba>
+        </abas>
       </div>
     </section>
 
@@ -176,12 +424,17 @@
   <!-- 4. Componentes (diretivas) -->
   <script src="app/componentes/acordeao/acordeao.directive.js"></script>
   <script src="app/componentes/paginacao/paginacao.directive.js"></script>
+  <script src="app/componentes/barra-progresso/barra-progresso.directive.js"></script>
+  <script src="app/componentes/abas/abas.directive.js"></script>
   <script src="app/componentes/menu-suspenso/menu-suspenso.directive.js"></script>
   <script src="app/componentes/toast/toast-container.directive.js"></script>
+  <script src="app/componentes/seletor-arquivo/seletor-arquivo.directive.js"></script>
 
   <!-- 5. Controladores -->
   <script src="app/controladores/conta.controller.js"></script>
+  <script src="app/controladores/painel.controller.js"></script>
   <script src="app/controladores/catalogo.controller.js"></script>
+  <script src="app/controladores/perfil.controller.js"></script>
   <script src="app/controladores/ajuda.controller.js"></script>
 </body>
 </html>

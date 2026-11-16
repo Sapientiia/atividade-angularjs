@@ -754,6 +754,70 @@ toast-container {
   box-shadow: var(--anel-foco);
 }
 
+/* Inválido depois de "Salvar alterações" (.is-invalid do Bootstrap 4). */
+.campo--invalido {
+  border-color: var(--cor-perigo);
+}
+
+.rotulo__obrigatorio {
+  color: var(--cor-texto-suave);
+}
+
+.grupo-campo {
+  margin-bottom: var(--espaco-3);
+}
+
+/* Mensagem abaixo do campo inválido (.invalid-feedback). */
+.mensagem-erro {
+  margin: var(--espaco-1) 0 0;
+  font-size: var(--fonte-pequena);
+  color: var(--cor-perigo);
+}
+
+/* Texto de apoio abaixo do campo (.form-text). */
+.texto-apoio {
+  margin: var(--espaco-1) 0 var(--espaco-3);
+  font-size: var(--fonte-pequena);
+  color: var(--cor-texto-suave);
+}
+
+/* Campo de arquivo nativo; o botão interno recebe o visual do .btn--secundario. */
+/* width: 100%: com a largura padrão, o Chrome corta o nome do arquivo no meio. */
+.campo-arquivo {
+  display: block;
+  width: 100%;
+  font: inherit;
+  font-size: var(--fonte-base);
+  color: var(--cor-texto);
+}
+
+.campo-arquivo:focus-visible {
+  border-radius: var(--raio);
+}
+
+.campo-arquivo::file-selector-button {
+  margin-right: var(--espaco-2);
+  padding: var(--btn-padding);
+  font: inherit;
+  line-height: var(--altura-linha);
+  color: var(--cor-texto);
+  background: var(--cor-secundaria);
+  border: 1px solid var(--cor-secundaria);
+  border-radius: var(--raio);
+  cursor: pointer;
+  transition: background-color var(--transicao-controle), border-color var(--transicao-controle);
+}
+
+.campo-arquivo:hover:not(:disabled)::file-selector-button {
+  background: var(--cor-secundaria-hover);
+  border-color: var(--cor-secundaria-borda-hover);
+}
+
+.campo-arquivo:disabled::file-selector-button {
+  opacity: .65;
+  cursor: default;
+}
+
 /* Abaixo de 16 px, o Safari do iOS dá zoom na página ao focar o campo. */
 @media (max-width: 767.98px) {
   .campo {
@@ -855,10 +919,42 @@ toast-container {
   white-space: nowrap;
 }
 
+/* Legenda das tabelas do Histórico, acima e à esquerda. */
+.tabela caption {
+  caption-side: top;
+  padding: 0 0 var(--espaco-2);
+  font-weight: var(--peso-negrito);
+  color: var(--cor-texto);
+  text-align: left;
+}
+
+.tabela-rolagem {
+  margin-bottom: var(--espaco-4);
+}
+
+.tabela-rolagem:focus-visible {
+  border-radius: var(--raio-pequeno);
+}
+
+/* Só a palavra muda de cor; não há selo nem fundo colorido. */
+.situacao--reprovado {
+  color: var(--cor-perigo);
+}
+
 @media (max-width: 767.98px) {
   .tabela th,
   .tabela td {
     padding: .5rem;
+  }
+
+  /* Histórico: cada linha numa linha só, com rolagem horizontal dentro do
+     invólucro (role="region", focável), e não na página. */
+  .tabela-rolagem {
+    overflow-x: auto;
+  }
+
+  .tabela-rolagem .tabela {
+    white-space: nowrap;
   }
 }
 
@@ -1135,6 +1231,394 @@ toast-container {
 .ajuda__horario {
   margin: var(--espaco-3) 0 0;
   color: var(--cor-texto-suave);
+}
+
+/* ==========================================================================
+   Painel: identificação, cartões e grade
+   ========================================================================== */
+
+.identificacao {
+  margin-bottom: var(--espaco-4);
+}
+
+.identificacao__saudacao {
+  margin: 0;
+  font-weight: var(--peso-negrito);
+}
+
+.identificacao__curso {
+  margin: 0;
+  color: var(--cor-texto-suave);
+}
+
+/* 1 coluna; 2 a partir de 768 px; 3 a partir de 992 px (Prazos ocupa duas
+   linhas na coluna 3 e Contato ocupa as colunas 1 e 2 da segunda linha). */
+.painel-grid {
+  display: grid;
+  gap: var(--espaco-3);
+}
+
+@media (min-width: 768px) {
+  .painel-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 992px) {
+  .painel-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--espaco-4);
+  }
+
+  .painel-grid .cartao--prazos {
+    grid-column: 3;
+    grid-row: 1 / span 2;
+  }
+
+  .painel-grid .cartao--contato {
+    grid-column: 1 / span 2;
+  }
+}
+
+/* Cartão do Boost (.card): borda fina, raio de 8 px, sem sombra e sem hover. */
+.cartao {
+  min-width: 0;
+  padding: var(--cartao-padding);
+  background: var(--branco);
+  border: var(--borda-cartao);
+  border-radius: var(--raio);
+}
+
+.cartao__nota {
+  margin: var(--espaco-2) 0 0;
+  font-size: var(--fonte-pequena);
+  color: var(--cor-texto-suave);
+}
+
+.cartao__rotulo {
+  margin: 0;
+  font-size: var(--fonte-pequena);
+  color: var(--cor-texto-suave);
+}
+
+/* Maior número da página: o tamanho do h4, nunca maior. */
+.cartao__valor {
+  margin: 0;
+  font-size: var(--fonte-h4);
+  font-weight: var(--peso-negrito);
+  line-height: var(--altura-linha-titulo);
+  font-variant-numeric: tabular-nums;
+}
+
+.cartao__detalhe {
+  margin: var(--espaco-1) 0 0;
+  font-size: var(--fonte-pequena);
+}
+
+.cartao__linha {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.cartao__link {
+  margin: var(--espaco-2) 0 0;
+}
+
+.prazos {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.prazos__item {
+  padding-block: var(--espaco-2);
+}
+
+.prazos__item:first-child {
+  padding-top: 0;
+}
+
+.prazos__item:last-child {
+  padding-bottom: 0;
+}
+
+.prazos__item + .prazos__item {
+  border-top: var(--borda);
+}
+
+.prazos__data {
+  display: block;
+  font-weight: var(--peso-negrito);
+  font-variant-numeric: tabular-nums;
+}
+
+.prazos__descricao {
+  display: block;
+}
+
+/* ==========================================================================
+   Componente: barra de progresso (.progress / .progress-bar)
+   ========================================================================== */
+
+.progresso {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-2);
+}
+
+/* O overflow: hidden recorta a ponta da barra no raio do trilho. */
+.progresso__trilho {
+  flex: 1;
+  height: 1rem;
+  overflow: hidden;
+  background: var(--cor-trilho);
+  border-radius: var(--raio);
+}
+
+.progresso__barra {
+  height: 100%;
+  background: var(--cor-primaria);
+  transition: width var(--transicao-progresso);
+}
+
+/* min-width: o texto não empurra a barra quando passa de 9% para 10%. */
+.progresso__percentual {
+  min-width: 4ch;
+  font-weight: var(--peso-negrito);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+/* ==========================================================================
+   Componente: abas (variante plana do Moodle 4)
+   ========================================================================== */
+
+/* A linha cinza fica num ::after, por baixo das abas; o indicador de 3 px da
+   aba selecionada cobre a linha. Assim a lista pode rolar na horizontal
+   (overflow-x: auto) sem cortar o indicador. */
+.abas__lista {
+  position: relative;
+  display: flex;
+  margin-bottom: var(--espaco-4);
+  overflow-x: auto;
+}
+
+.abas__lista::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border-bottom: var(--borda);
+}
+
+.abas__aba {
+  position: relative;
+  z-index: 1;
+  flex: none;
+  padding: var(--aba-padding);
+  font: inherit;
+  font-weight: var(--peso-normal);
+  line-height: var(--altura-linha);
+  color: var(--cor-texto);
+  white-space: nowrap;
+  background: transparent;
+  background-clip: padding-box;
+  border: 0;
+  border-bottom: var(--borda-indicador) solid transparent;
+  cursor: pointer;
+  transition: background-color var(--transicao-controle), box-shadow var(--transicao-controle);
+}
+
+.abas__aba:hover {
+  background-color: var(--cor-fundo-secundario);
+}
+
+.abas__aba:active {
+  background-color: var(--cinza-200);
+}
+
+/* Anel interno: o externo seria cortado pela rolagem da lista. */
+.abas__aba:focus-visible {
+  outline: 0;
+  box-shadow: var(--anel-foco-interno);
+}
+
+/* Selecionada: fundo claro e indicador azul; o peso não muda. */
+.abas__aba[aria-selected="true"] {
+  background-color: var(--cor-fundo-secundario);
+  border-bottom-color: var(--cor-primaria);
+}
+
+.abas__painel:focus-visible {
+  border-radius: var(--raio-pequeno);
+}
+
+@media (max-width: 575.98px) {
+  .abas__aba {
+    padding: .5rem .75rem;
+  }
+}
+
+/* ==========================================================================
+   Perfil: dados pessoais
+   ========================================================================== */
+
+/* Campos somente leitura em grade: rótulo pequeno acima do valor. */
+.dados {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr));
+  column-gap: var(--espaco-3);
+  margin: 0 0 var(--espaco-3);
+}
+
+.dados__item {
+  min-width: 0;
+}
+
+.dados dt {
+  font-size: var(--fonte-pequena);
+  color: var(--cor-texto-suave);
+}
+
+.dados dd {
+  margin: 0 0 var(--espaco-3);
+  color: var(--cor-texto);
+  overflow-wrap: anywhere;
+}
+
+/* fieldset sem moldura (reboot do Bootstrap 4); a legenda tem o estilo do h3. */
+.formulario__grupo {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.formulario__legenda {
+  margin-bottom: var(--espaco-2);
+  padding: 0;
+  font-size: var(--fonte-h5);
+  font-weight: var(--peso-negrito);
+  line-height: var(--altura-linha-titulo);
+}
+
+.formulario__campos {
+  display: grid;
+  column-gap: var(--espaco-3);
+}
+
+.formulario__acoes {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--espaco-2);
+  margin-top: var(--espaco-2);
+}
+
+.formulario__aviso {
+  margin: 0;
+  font-size: var(--fonte-pequena);
+  color: var(--cor-texto-secundario);
+}
+
+@media (min-width: 768px) {
+  .formulario__campos {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .grupo-campo--largo {
+    grid-column: 1 / -1;
+  }
+
+  .formulario__acoes {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .formulario__aviso {
+    margin-left: var(--espaco-2);
+  }
+}
+
+@media (min-width: 992px) {
+  .dados,
+  .formulario {
+    max-width: var(--largura-texto);
+  }
+}
+
+/* ==========================================================================
+   Perfil: histórico e documentos
+   ========================================================================== */
+
+.historico__coeficiente {
+  margin-bottom: var(--espaco-4);
+}
+
+/* Blocos empilhados; a partir de 992 px, dois lado a lado e as
+   solicitações recentes em largura total abaixo. */
+.documentos {
+  display: grid;
+  gap: var(--espaco-5);
+}
+
+.documentos__bloco {
+  min-width: 0;
+}
+
+@media (min-width: 992px) {
+  .documentos {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .documentos__bloco--largo {
+    grid-column: 1 / -1;
+  }
+}
+
+.documentos__lista {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.documentos__item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--espaco-2);
+  padding-block: .75rem;
+  border-top: var(--borda);
+}
+
+@media (min-width: 576px) {
+  .documentos__item {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--espaco-3);
+  }
+}
+
+.documentos__nome,
+.documentos__prazo {
+  display: block;
+}
+
+.documentos__prazo {
+  font-size: var(--fonte-pequena);
+  color: var(--cor-texto-suave);
+}
+
+.envio__progresso {
+  max-width: 24rem;
+  margin-top: var(--espaco-3);
+}
+
+.envio__concluido {
+  margin: var(--espaco-1) 0 0;
+  font-size: var(--fonte-pequena);
 }
 
 /* ==========================================================================
