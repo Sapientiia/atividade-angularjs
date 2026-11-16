@@ -47,7 +47,7 @@ export const documentos = [
 
 // Datas em texto 'yyyy-MM-dd', exibidas com o formatador formatarData.
 export const solicitacoes = [
-  { documento: 'Declaração de matrícula — 2026.2', data: '2026-08-05', situacao: 'Emitido' },
   { documento: 'Atestado médico', data: '2026-09-22', situacao: 'Recebido' },
+  { documento: 'Declaração de matrícula — 2026.2', data: '2026-08-05', situacao: 'Emitido' },
   { documento: 'Histórico escolar', data: '2026-03-12', situacao: 'Emitido' }
 ];

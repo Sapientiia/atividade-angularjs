@@ -630,7 +630,7 @@ toast-container {
 /* pointer-events: none deixa o contêiner vazio sem bloquear cliques na página. */
 .toasts {
   position: fixed;
-  top: 0;
+  bottom: 0;
   left: 50%;
   z-index: var(--z-toast);
   display: flex;
@@ -638,7 +638,7 @@ toast-container {
   gap: var(--espaco-2);
   width: calc(100% - 2rem);
   max-width: var(--toast-largura);
-  padding-top: var(--espaco-3);
+  padding-bottom: var(--espaco-3);
   transform: translateX(-50%);
   pointer-events: none;
 }
